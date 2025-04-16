@@ -269,3 +269,12 @@ Where:
 - n = rate of collapse or expansion (e.g. 1, 2, etc.)
 
 This asymptotic behavior illustrates why traditional physics breaks down at singularities - as the density approaches infinity, the curvature of space-time becomes so extreme that our current mathematical models can no longer accurately describe reality. Our visualizations help make this abstract concept more intuitive by showing how geometric forms transform as they approach these extreme conditions.
+
+### Singularity Plot (Work in Progress)
+
+This plot visualizes a symmetric model of the universe's density and space volume, highlighting the singularity at $t=0$, representing both the Big Bang and Big Crunch.
+
+- **Red Curve:** Inverse square density model $\rho(t) = \frac{1}{t^2 + \epsilon}$
+- **Blue Dashed Curve:** Space-time volume shrinking/growing $V(t) = t^2 + \epsilon$
+
+*Note: We're still refining this visualization to better illustrate the relationship between space-time volume and density at the moment of singularity.*
