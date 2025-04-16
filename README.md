@@ -193,3 +193,62 @@ At the Big Bang or Big Crunch, the energy density ρ becomes infinite:
 $$\rho \rightarrow \infty \quad \text{as} \quad a \rightarrow 0$$
 
 Where a is the scale factor of the universe. This shows how the universe's energy density approaches infinity as it collapses or during its initial state.
+
+## Time-Density Geometry Model
+
+### Step 1: Define the Core Idea
+As space contracts (Big Crunch), or expands (Big Bang), time becomes nonlinear and relates to geometric density (how much shape "fits" into a unit of space).
+
+So we've built a Time-Density Geometry Function to model this relationship.
+
+### Step 2: Define the Shapes and Roles
+
+| Shape | Meaning | Dim. | Notes |
+|-------|---------|------|-------|
+| Sphere | Represents the boundary of space | 3D | Represents isotropy of early universe |
+| Cube | Represents structured space | 3D | Represents "measurable" space-time |
+| Pyramid | Represents directional energy | 3D | Symbolic of entropy/gravity vectors |
+| Tesseract | 4D frame over time | 4D | Symbolizes emergent space-time layers |
+
+These shapes link to a density function over time that models cosmic evolution.
+
+### Step 3: Define a Time-Density Formula
+Let:
+- $t$: time since singularity (can be negative or positive)
+- $\rho(t)$: space-time shape-density at time $t$
+- $V_{shape}$: effective volume of the shape (cube, sphere, etc.)
+- $S(t)$: spatial compression/stretching factor due to tesseract projection
+- $D(t)$: dimension transition factor (e.g., from 3D to 4D)
+
+We define:
+
+$$\rho(t) = \frac{V_{shape}}{S(t) \cdot D(t)}$$
+
+Then, to relate time to shape, we propose:
+
+$$T_{curvature}(t) = \frac{1}{\rho(t)} = \frac{S(t) \cdot D(t)}{V_{shape}}$$
+
+This suggests:
+- When shapes are more "compressed" (like a collapsing tesseract), $S(t) \to 0$, density $\rho(t) \to \infty$, and time curvature spikes → Big Crunch.
+- When the universe is just emerging, $V_{shape} \to 0$, and again $\rho(t) \to \infty$, meaning undefined time → Big Bang.
+
+### Step 4: Example Functions
+Let's give some plausible example formulas:
+
+Projection factor from 4D → 3D (tesseract rotation):
+
+$$S(t) = \frac{1}{1 + \sin^2(\omega t)}$$
+
+Dimension expansion factor:
+
+$$D(t) = 1 + \alpha t^2$$
+
+(so as time grows, space dimensionality expands, simulating entropy)
+
+Then:
+
+$$\rho(t) = \frac{V_{shape}}{\frac{1}{1 + \sin^2(\omega t)} \cdot (1 + \alpha t^2)}$$
+
+$$T_{curvature}(t) = \frac{(1 + \sin^2(\omega t))(1 + \alpha t^2)}{V_{shape}}$$
+
+These equations are visualized in our animations, showing how geometric shapes transform to represent the changing nature of space-time near cosmic singularities.
