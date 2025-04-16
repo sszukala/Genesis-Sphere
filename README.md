@@ -280,3 +280,91 @@ This plot visualizes a symmetric model of the universe's density and space volum
 - **Blue Dashed Curve:** Space-time volume shrinking/growing $V(t) = t^2 + \epsilon$
 
 *Note: We're still refining this visualization to better illustrate the relationship between space-time volume and density at the moment of singularity.*
+
+# Time-Density Geometry for the Big Crunch and Big Bang
+
+This project introduces a Time-Density Geometry Function based on the idea that the evolution of space-time during cosmological events like the Big Bang and Big Crunch is driven by geometric density. As the universe compresses or expands, time becomes nonlinear and intimately linked with how much shape can fit into a unit of space.
+
+## Core Concept
+
+The core idea of this approach is that as space contracts (Big Crunch) or expands (Big Bang), time becomes nonlinear, and this relationship is governed by geometric density, which describes how much "shape" can fit into a unit of space. The idea here is to develop a Time-Density Geometry Function that connects shapes (e.g., cube, sphere, pyramid, and tesseract) to space-time evolution.
+
+### Shapes and Their Roles:
+
+| Shape | Meaning | Dimensions | Notes |
+|-------|---------|------------|-------|
+| Sphere | Boundary of space | 3D | Represents isotropy of the early universe. |
+| Cube | Structured space | 3D | Represents measurable space-time. |
+| Pyramid | Directional energy (entropy) | 3D | Represents gravity and entropy vectors. |
+| Tesseract | 4D frame over time | 4D | Symbolizes emergent space-time layers. |
+
+These shapes interact over time in a dynamic fashion, and the interaction between the shapes can be described by a Time-Density Formula.
+
+## Time-Density Formula
+
+Let's define the variables that influence the Time-Density relationship:
+
+- **t**: Time since the singularity (Big Bang or Big Crunch), where time can be both positive or negative.
+- **ρ(t)**: Space-time shape density at time t.
+- **V_shape**: Effective volume of the shape (cube, sphere, etc.).
+- **S(t)**: Spatial compression/stretching factor due to the tesseract projection.
+- **D(t)**: Dimension transition factor (such as transitioning from 3D to 4D).
+
+The formula is given by:
+
+$$\rho(t) = \frac{V_{shape}}{S(t) \cdot D(t)}$$
+
+To define the time curvature in terms of the density:
+
+$$T_{curvature}(t) = \frac{1}{\rho(t)} = \frac{S(t) \cdot D(t)}{V_{shape}}$$
+
+## Interpretation
+
+- When shapes are more compressed (as in the collapse of the tesseract), S(t) → 0, leading to ρ(t) → ∞ and time curvature spikes, suggesting the Big Crunch.
+- As the universe begins to emerge, V_shape → 0, and once again ρ(t) → ∞, signaling an undefined time or the Big Bang.
+
+## Example Time-Density Functions
+
+Here are plausible example functions that model the compression and expansion of the universe:
+
+Projection factor from 4D → 3D (Tesseract Rotation):
+
+$$S(t) = \frac{1}{1 + \sin^2(\omega t)}$$
+
+Dimension Expansion Factor:
+
+$$D(t) = 1 + \alpha t^2$$
+
+Where:
+- ω is the rotation factor for the tesseract.
+- α is a constant controlling the rate of expansion over time.
+
+Now, the full Time-Density function becomes:
+
+$$\rho(t) = \frac{V_{shape}}{(1 + \sin^2(\omega t)) \cdot (1 + \alpha t^2)}$$
+
+And for the curvature:
+
+$$T_{curvature}(t) = \frac{(1 + \sin^2(\omega t)) \cdot (1 + \alpha t^2)}{V_{shape}}$$
+
+## Why This is New
+
+**Nonlinear Time Concept**: By relating time directly to the geometric density of space, this approach introduces a novel way to view cosmological events like the Big Bang and Big Crunch. Traditional models often treat time as linear, but here, we propose that time behaves as a function of geometric density, potentially offering new insights into the nature of time itself.
+
+**Tesseract and 4D Geometry**: Using the tesseract as a 4D reference frame for the evolution of space-time is innovative. The concept of projecting from 4D back to 3D and its impact on space-time is a step beyond traditional 3D models.
+
+**Geometric Density Over Time**: This method directly correlates the shape's density to the behavior of the universe's space-time structure over time. It's a new mathematical way of relating how space-time behaves near singularities.
+
+## GitHub Repository Contents
+
+This repository contains:
+
+- **Time-Density Geometry Functions**: The mathematical functions used to model the Big Bang, Big Crunch, and other cosmological phenomena.
+- **WebGL Visualization**: An interactive 3D/4D visualization of the time-density effects.
+- **Python Scripts**: Code to plot and simulate these functions over time.
+
+Feel free to contribute, enhance the mathematical models, or help improve the visualizations! 🌌
+
+## Usage
+
+To use the visualization or mathematical models, clone the repository and follow the instructions in this README file.
