@@ -252,3 +252,20 @@ $$\rho(t) = \frac{V_{shape}}{\frac{1}{1 + \sin^2(\omega t)} \cdot (1 + \alpha t^
 $$T_{curvature}(t) = \frac{(1 + \sin^2(\omega t))(1 + \alpha t^2)}{V_{shape}}$$
 
 These equations are visualized in our animations, showing how geometric shapes transform to represent the changing nature of space-time near cosmic singularities.
+
+## 📈 Visualizing Time and Singularity
+
+This plot demonstrates how density approaches infinity as time approaches the singularities of:
+
+- The Big Bang (t → 0)
+- The Big Crunch (t → ∞)
+
+Mathematically represented as:
+
+$$\rho(t) = \frac{1}{t^n}$$
+
+Where:
+- ρ(t) = density as a function of time
+- n = rate of collapse or expansion (e.g. 1, 2, etc.)
+
+This asymptotic behavior illustrates why traditional physics breaks down at singularities - as the density approaches infinity, the curvature of space-time becomes so extreme that our current mathematical models can no longer accurately describe reality. Our visualizations help make this abstract concept more intuitive by showing how geometric forms transform as they approach these extreme conditions.
