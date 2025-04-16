@@ -450,6 +450,60 @@ cd emergent-space-time
 pip install -r requirements.txt
 ```
 
+## Numerical Validation with Athena MHD Code
+
+### Using Athena for Model Validation
+
+[Athena](https://github.com/PrincetonUniversity/athena) is a grid-based code for astrophysical magnetohydrodynamics (MHD) developed by Princeton University. While our mathematical formulations present a novel approach to time-density relationships, certain aspects can be validated through numerical simulations.
+
+### Installation and Setup
+
+To install Athena for validation purposes:
+
+```bash
+# Clone the Athena repository
+git clone https://github.com/PrincetonUniversity/athena.git
+
+# Navigate to the Athena directory
+cd athena
+
+# Configure with relativistic MHD support
+./configure.py --prob=blast --coord=spherical-polar --eos=general/eos_table --flux=hllc --order=3 -b -g -s
+
+# Compile the code
+make
+```
+
+### Validation Approach
+
+While Athena cannot directly validate our Time-Density Geometry and Temporal Flow Ratio formulations, it can help validate several underlying physical aspects:
+
+1. **Gravitational Time Dilation**: Using Athena's general relativistic MHD capabilities, we can simulate the behavior of matter near massive objects and observe time dilation effects.
+
+2. **Event Horizon Dynamics**: Athena can model fluid dynamics near black hole event horizons, providing insight into how space behaves near a Schwarzschild radius.
+
+3. **Density-Time Relationships**: By tracking density evolution in simulated cosmological expansion/contraction scenarios, we can compare with our time-density formulations.
+
+### Limitations for Our Model
+
+It's important to note that Athena has specific limitations when it comes to validating our complete model:
+
+- It can't directly simulate our 4D to 3D projection techniques
+- The Temporal Flow Ratio formulation requires custom implementation
+- Our specific sine-based projection factor is not a standard feature
+
+### Alternative Validation Methods
+
+For comprehensive validation of our mathematical formulations, we are considering:
+
+1. **Custom Numerical Implementations**: Developing specialized code that directly implements our mathematical formulas.
+
+2. **Analytical Proof**: Demonstrating mathematical consistency with established gravitational and relativistic principles.
+
+3. **Observational Data Comparison**: Where possible, comparing our model predictions with astronomical observations.
+
+The integration of Athena simulations with our custom visualization tools represents an ongoing development goal for this project.
+
 ## License
 
 This project is licensed under the MIT License — see the LICENSE file for details.
