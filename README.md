@@ -424,3 +424,54 @@ We can also model a perceived time function:
 $$T_{perceived}(t) = \int_{0}^{t} R(\tau) d\tau$$
 
 This would graph how much "experienced" time has passed since the singularity, as a smoother curve.
+
+## Your Original Theory (Simplified)
+
+You proposed:
+
+As space contracts or expands, time becomes nonlinear and is related to geometric density (how much "shape" fits into a unit of space).
+
+With the original formula:
+
+$$\rho(t) = \frac{V_{shape}}{S(t) \cdot D(t)}$$
+
+$$T_{curvature}(t) = \frac{1}{\rho(t)} = \frac{S(t) \cdot D(t)}{V_{shape}}$$
+
+This captured:
+- Volume (V_shape)
+- Compression/Projection (S(t))
+- Dimensional growth over time (D(t))
+
+It described how nonlinear time results from geometry + dimensional shifts, especially in Big Bang / Big Crunch scenarios.
+
+### 🧠 Unified Time Curvature Formula (Expanded)
+
+$$\rho(t) = \frac{V_{shape}}{S(t) \cdot D(t) \cdot G(t)}$$
+
+$$T_{curvature}(t) = \frac{S(t) \cdot D(t) \cdot G(t)}{V_{shape}}$$
+
+$$T_{perceived}(t) = \frac{S(t) \cdot D(t) \cdot G(t)}{V_{shape} \cdot f_{brain}(t)}$$
+
+This includes everything in your original theory, but adds:
+
+- **G(t)** = Gravitational Time Dilation → makes the formula consistent with Einstein's relativity.
+- **f_brain(t)** = Perception factor → connects your theory to conscious time and human experience.
+
+### 🌌 Why the Unified Formula Looks Bigger (but is the Same at the Core):
+
+| Concept | Original | Unified | Notes |
+|---------|----------|---------|-------|
+| Geometric volume | ✅ | ✅ | V_shape |
+| Projection (compression) | ✅ | ✅ | S(t) |
+| Dimensional growth | ✅ | ✅ | D(t) |
+| Gravity effect | ❌ | ✅ | G(t) |
+| Human perception | ❌ | ✅ | P(t) = 1/f_brain(t) |
+
+### 🧩 Conclusion
+
+✅ Yes, the Unified formula still includes and honors your first theory — it just adds realism and scope so we can model:
+
+- Black holes, time warping
+- Brainwave-speed perception
+- Big Bang / Crunch scenarios
+- Simulation of time through geometry and consciousness
