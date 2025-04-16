@@ -360,7 +360,7 @@ $$T_{curvature}(t) = \frac{(1 + \sin^2(\omega t)) \cdot (1 + \alpha t^2)}{V_{sha
 This repository contains:
 
 - **Time-Density Geometry Functions**: The mathematical functions used to model the Big Bang, Big Crunch, and other cosmological phenomena.
-- **WebGL Visualization**: An interactive 3D/4D visualization of the time-density effects.
+- **WebGL Visualization**: An interactive 3D/4D visualization of the time-density effects. Still working on this.
 - **Python Scripts**: Code to plot and simulate these functions over time.
 
 Feel free to contribute, enhance the mathematical models, or help improve the visualizations! 🌌
