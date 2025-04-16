@@ -118,3 +118,78 @@ Discussion Forum: Engage with the community to share insights and ideas.
 Email: [sszukala at gmail dot com]
 
 Thank you for exploring the Emergent Space-Time project! We hope it sparks curiosity and provides a fresh perspective on the nature of the universe and time itself.
+
+## Mathematical Foundations
+
+### 1. Time Dilation (Near Singularities)
+The general formula for time dilation in special relativity is:
+
+$$\Delta t' = \frac{\Delta t}{\sqrt{1 - \frac{v^2}{c^2}}}$$
+
+Where:
+- Δt′ is the time interval measured by an observer in motion (moving at velocity v)
+- Δt is the time interval measured by an observer at rest
+- v is the velocity of the moving observer
+- c is the speed of light
+
+### 2. The Friedmann Equations (Cosmological Evolution)
+The Friedmann equation describing the expansion of the universe is:
+
+$$\left( \frac{\dot{a}}{a} \right)^2 = \frac{8 \pi G}{3} \rho - \frac{k}{a^2} + \frac{\Lambda}{3}$$
+
+Where:
+- a is the scale factor of the universe
+- ȧ is the time derivative of a, representing the expansion rate
+- G is the gravitational constant
+- ρ is the energy density of the universe
+- k is the curvature of space (can be -1, 0, or +1)
+- Λ is the cosmological constant
+
+### 3. Cosmological Redshift (Time and Space Relationship)
+The redshift of light due to cosmic expansion is given by:
+
+$$z = \frac{\lambda_{\text{observed}} - \lambda_{\text{emitted}}}{\lambda_{\text{emitted}}}$$
+
+Where:
+- z is the redshift
+- λ_observed is the wavelength of light observed by an observer
+- λ_emitted is the wavelength of light when it was emitted by the source
+
+In terms of time dilation, the relationship is:
+
+$$\Delta t_{\text{observed}} = \frac{\Delta t_{\text{emitted}}}{\sqrt{1 + z}}$$
+
+### 4. 4D Projection (Mapping 4D to 3D)
+For the projection of 4D points into 3D space, a rotation matrix and perspective projection are applied. The rotation matrix for a 4D rotation is:
+
+$$R = \begin{bmatrix}
+\cos(\theta) & 0 & 0 & -\sin(\theta) \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+\sin(\theta) & 0 & 0 & \cos(\theta)
+\end{bmatrix}$$
+
+Where θ is the rotation angle around the w-axis.
+
+Once the 4D point is rotated, the perspective projection onto 3D space is:
+
+$$x_{\text{proj}} = \frac{x_4}{2 - w_4}, \quad y_{\text{proj}} = \frac{y_4}{2 - w_4}, \quad z_{\text{proj}} = \frac{z_4}{2 - w_4}$$
+
+### 5. Black Hole Singularity (Schwarzschild Radius)
+The Schwarzschild radius (r_s) for a black hole, or a collapsing universe, is given by:
+
+$$r_s = \frac{2GM}{c^2}$$
+
+Where:
+- M is the mass of the object (e.g., the universe or a black hole)
+- G is the gravitational constant
+- c is the speed of light
+
+At r_s, time effectively "stops," and the laws of physics break down.
+
+### 6. Energy Density at Singularity (Big Bang and Big Crunch)
+At the Big Bang or Big Crunch, the energy density ρ becomes infinite:
+
+$$\rho \rightarrow \infty \quad \text{as} \quad a \rightarrow 0$$
+
+Where a is the scale factor of the universe. This shows how the universe's energy density approaches infinity as it collapses or during its initial state.
