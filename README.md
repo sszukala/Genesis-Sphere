@@ -368,3 +368,59 @@ Feel free to contribute, enhance the mathematical models, or help improve the vi
 ## Usage
 
 To use the visualization or mathematical models, clone the repository and follow the instructions in this README file.
+
+## Updated Concept: Time Density + Temporal Flow Ratio
+
+We'll define a new function:
+
+### 🕒 R(t) — Temporal Flow Ratio
+
+This represents how time flow speed changes as a function of time from the singularity (Big Bang or Big Crunch). A slower flow means that "less time" passes per unit of observer time.
+
+Let's define:
+
+$$R(t) = \frac{1}{1 + \frac{\beta}{|t| + \varepsilon}}$$
+
+Where:
+- β is a temporal drag coefficient — higher means more early time slowdown.
+- ε is a small constant to avoid division by zero.
+
+At t ≈ 0 (near the singularity), R(t) → 0 (time nearly freezes).
+As |t| increases, R(t) → 1 (normal flow resumes).
+
+### 🔣 Updated Full Time-Density-Timeflow Formula
+
+Let's recall the original:
+
+$$\rho(t) = \frac{V_{shape}}{S(t) \cdot D(t)}$$
+
+$$T_{curvature}(t) = \frac{1}{\rho(t)} = \frac{S(t) \cdot D(t)}{V_{shape}}$$
+
+Now include temporal flow ratio:
+
+$$T_{effective}(t) = T_{curvature}(t) \cdot R(t)$$
+
+Which means:
+
+$$T_{effective}(t) = \frac{S(t) \cdot D(t)}{V_{shape} \cdot (1 + \frac{\beta}{|t| + \varepsilon})}$$
+
+This shows that not only does geometric compression/stretching affect time, but time itself may have been flowing more slowly near the singularity.
+
+### ✅ Key Insight:
+
+Near Big Bang or Big Crunch (t → 0):
+- S(t) → 0 (extreme compression),
+- D(t) increases or drops sharply,
+- R(t) → 0 → Time appears frozen from external observers.
+
+Far from singularities (t → ∞):
+- R(t) → 1,
+- Normal time resumes.
+
+### 🧠 Optional:
+
+We can also model a perceived time function:
+
+$$T_{perceived}(t) = \int_{0}^{t} R(\tau) d\tau$$
+
+This would graph how much "experienced" time has passed since the singularity, as a smoother curve.
