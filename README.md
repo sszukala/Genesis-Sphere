@@ -1,43 +1,32 @@
 # Genesis Sphere
- 
-Warn somestuff is still working on for imaging
 
-Emergent Space-Time: Visualizing the Big Bang, Big Crunch, and Singularities in 4D Geometry
+*Note: Some visualization components are still under development*
+
+# Emergent Space-Time: Visualizing the Big Bang, Big Crunch, and Singularities in 4D Geometry
+
 Welcome to the Emergent Space-Time project! This open-source initiative explores the profound relationship between time, space, and singularities by using dynamic 3D and 4D geometry to represent the collapse and dilation of the universe at extreme conditions — specifically during the Big Bang and Big Crunch scenarios.
 
-About the Project
+## About the Project
+
 This project leverages geometric metaphors like cubes, spheres, and pyramids to offer an intuitive, visual exploration of time as a fluid concept. By simulating the behavior of the universe as it evolves through stages of expansion and contraction, we aim to bridge the gap between abstract mathematical theories and visually accessible representations.
 
-Key Concepts
-Time as a Fluid Concept: Time, typically considered an abstract and static quantity in traditional models, is treated as a dynamic, emergent property that behaves differently in extreme cosmological conditions (near singularities).
+## Key Concepts
 
-Geometric Visualization: We use 4D geometry to model the universe’s evolution, from the Big Bang (a point of singularity where time becomes undefined) to the Big Crunch (where space collapses and time dilates, eventually "freezing" as it approaches singularity).
+**Time as a Fluid Concept**: Time, typically considered an abstract and static quantity in traditional models, is treated as a dynamic, emergent property that behaves differently in extreme cosmological conditions (near singularities).
 
-Emergent Space: The visual representation of collapsing space through 3D projections of 4D shapes (like cubes and pyramids) provides a fresh perspective on the Big Bang and Big Crunch, demonstrating how the universe's geometry mirrors the behavior of time itself.
+**Geometric Visualization**: We use 4D geometry to model the universe's evolution, from the Big Bang (a point of singularity where time becomes undefined) to the Big Crunch (where space collapses and time dilates, eventually "freezing" as it approaches singularity).
 
-Project Overview
-Features
-4D Projection to 3D: Visualize the expansion and contraction of the universe through 3D projections of 4D objects (like tesseracts), showing how time behaves near singularities.
+**Emergent Space**: The visual representation of collapsing space through 3D projections of 4D shapes (like cubes and pyramids) provides a fresh perspective on the Big Bang and Big Crunch, demonstrating how the universe's geometry mirrors the behavior of time itself.
 
-Time Dilation and Singularity Effects: Illustrate the extreme time dilation and "freezing" of time near the Big Crunch, and how the universe becomes infinitely dense at the Big Bang.
+## How It Works
 
-Animations: Dynamic animations that allow users to experience the emergence and collapse of the universe, simulating how space-time behaves in a way that traditional cosmological models cannot.
+**4D Geometry**: A 4D tesseract (hypercube) is used to represent the universe in its expanded form. As the animation progresses, we simulate how this 4D geometry projects into 3D space.
 
-Technologies Used
-Python: For simulations and calculations, using libraries like numpy and matplotlib.
+**Big Bang Phase**: At the start of the simulation, the universe is in its infinitely dense state, with time approaching zero. This phase visually represents the point of singularity.
 
-3D Graphics and Animation: matplotlib’s 3D projection capabilities and FuncAnimation for generating visualizations.
+**Big Crunch Phase**: As the universe contracts, the simulation shows how time dilates and "freezes" as it reaches the singularity. Space becomes infinitely contracted, and the flow of time as we know it breaks down.
 
-Open-Source Approach: All code and models are available for modification, contribution, and redistribution under an open-source license.
-
-How It Works
-4D Geometry: A 4D tesseract (hypercube) is used to represent the universe in its expanded form. As the animation progresses, we simulate how this 4D geometry projects into 3D space.
-
-Big Bang Phase: At the start of the simulation, the universe is in its infinitely dense state, with time approaching zero. This phase visually represents the point of singularity.
-
-Big Crunch Phase: As the universe contracts, the simulation shows how time dilates and "freezes" as it reaches the singularity. Space becomes infinitely contracted, and the flow of time as we know it breaks down.
-
-Animations: The project's core feature is the dynamic animations that guide the user through these phases, making complex cosmological processes more digestible and accessible.
+**Animations**: The project's core feature is the dynamic animations that guide the user through these phases, making complex cosmological processes more digestible and accessible.
 
 ## Project Files and Visualizations
 
@@ -45,13 +34,13 @@ This project contains several visualization scripts that demonstrate different a
 
 ### Visualization Scripts
 
-- **cube_sphere_emergent_space.py**: Demonstrates the relationship between a 3D cube and a sphere, then transitions to a 4D tesseract projection. Creates `timespace_sim/cube_sphere_emergent_space.gif` showing the emergence of higher-dimensional space from lower dimensions.
+- **genesis_timespace.py**: Shows the step-by-step emergence of geometric forms, from a point (0D) to a line (1D), triangle (2D), tetrahedron (3D), and finally a cube (3D). Outputs `timespace_sim/emergent_space.gif` illustrating the dimensional hierarchy of space.
 
-- **big_bang_crunch.py**: Simulates the complete cosmic cycle from Big Bang to Big Crunch in three phases. Outputs `timespace_sim/cube_sphere_emergent_space.gif` visualizing the expansion of space-time and its subsequent contraction.
+- **cube_sphere_emergent_space.py**: Demonstrates the relationship between a 3D cube and a sphere, then transitions to a 4D tesseract projection. Creates `timespace_sim/cube_sphere_emergent_space.gif` showing the emergence of higher-dimensional space from lower dimensions.
 
 - **cube_to_tesseract.py**: Visualizes the rotation of a tesseract (4D hypercube) in 3D space, demonstrating how a 4D object appears when projected into our 3D reality. Creates `timespace_sim/cube_to_tesseract.gif`.
 
-- **genesis_timespace.py**: Shows the step-by-step emergence of geometric forms, from a point (0D) to a line (1D), triangle (2D), tetrahedron (3D), and finally a cube (3D). Outputs `timespace_sim/emergent_space.gif` illustrating the dimensional hierarchy of space.
+- **big_bang_crunch.py**: Simulates the complete cosmic cycle from Big Bang to Big Crunch in three phases. Outputs `timespace_sim/cube_sphere_emergent_space.gif` visualizing the expansion of space-time and its subsequent contraction.
 
 ### Utility Files
 
@@ -70,56 +59,13 @@ run_all_visualizations.bat
 Or run individual scripts:
 
 ```bash
-python cube_sphere_emergent_space.py
-python big_bang_crunch.py
-python cube_to_tesseract.py
 python genesis_timespace.py
+python cube_sphere_emergent_space.py
+python cube_to_tesseract.py
+python big_bang_crunch.py
 ```
 
 All output GIFs will be saved to the `timespace_sim` directory.
-
-## Why It Matters
-Understanding the relationship between time, space, and singularities is crucial for advancing our knowledge of the universe’s origin and potential fate. This project aims to present these abstract concepts in a form that is both visually engaging and scientifically accurate. It offers an alternative way of looking at cosmology through geometric metaphors and dynamic simulations.
-
-By publishing this project as an open-source resource, we hope to encourage further exploration of time, space, and cosmology. Whether you're a scientist, a student, or someone curious about the mysteries of the universe, this project aims to inspire a deeper understanding of the cosmos.
-
-How to Contribute
-We welcome contributions from the community! If you have ideas for improving the simulations, enhancing the visuals, or extending the project, feel free to fork the repository and submit a pull request.
-
-Bug Fixes: If you notice any bugs or issues, please report them through GitHub issues.
-
-Feature Requests: We are open to suggestions for new features, such as additional visualizations or more advanced models of space-time behavior.
-
-Documentation: Contributions to improve the documentation or add new examples are always appreciated.
-
-Getting Started
-To get started with the project, clone the repository and install the required dependencies:
-
-bash
-Copy
-Edit
-git clone https://github.com/yourusername/emergent-space-time.git
-cd emergent-space-time
-pip install -r requirements.txt
-You can then run the simulations and animations with the following command:
-
-bash
-Copy
-Edit
-python run_simulation.py
-License
-This project is licensed under the MIT License — see the LICENSE file for details.
-
-Connect with Us
-We encourage collaboration and discussions about the project. You can reach out to us or share your thoughts via the following channels:
-
-GitHub Issues: For bug reports and feature requests.
-
-Discussion Forum: Engage with the community to share insights and ideas.
-
-Email: [sszukala at gmail dot com]
-
-Thank you for exploring the Emergent Space-Time project! We hope it sparks curiosity and provides a fresh perspective on the nature of the universe and time itself.
 
 ## Mathematical Foundations
 
@@ -281,97 +227,9 @@ This plot visualizes a symmetric model of the universe's density and space volum
 
 *Note: We're still refining this visualization to better illustrate the relationship between space-time volume and density at the moment of singularity.*
 
-# Time-Density Geometry for the Big Crunch and Big Bang
+## Advanced Concepts: Time Density + Temporal Flow Ratio
 
-This project introduces a Time-Density Geometry Function based on the idea that the evolution of space-time during cosmological events like the Big Bang and Big Crunch is driven by geometric density. As the universe compresses or expands, time becomes nonlinear and intimately linked with how much shape can fit into a unit of space.
-
-## Core Concept
-
-The core idea of this approach is that as space contracts (Big Crunch) or expands (Big Bang), time becomes nonlinear, and this relationship is governed by geometric density, which describes how much "shape" can fit into a unit of space. The idea here is to develop a Time-Density Geometry Function that connects shapes (e.g., cube, sphere, pyramid, and tesseract) to space-time evolution.
-
-### Shapes and Their Roles:
-
-| Shape | Meaning | Dimensions | Notes |
-|-------|---------|------------|-------|
-| Sphere | Boundary of space | 3D | Represents isotropy of the early universe. |
-| Cube | Structured space | 3D | Represents measurable space-time. |
-| Pyramid | Directional energy (entropy) | 3D | Represents gravity and entropy vectors. |
-| Tesseract | 4D frame over time | 4D | Symbolizes emergent space-time layers. |
-
-These shapes interact over time in a dynamic fashion, and the interaction between the shapes can be described by a Time-Density Formula.
-
-## Time-Density Formula
-
-Let's define the variables that influence the Time-Density relationship:
-
-- **t**: Time since the singularity (Big Bang or Big Crunch), where time can be both positive or negative.
-- **ρ(t)**: Space-time shape density at time t.
-- **V_shape**: Effective volume of the shape (cube, sphere, etc.).
-- **S(t)**: Spatial compression/stretching factor due to the tesseract projection.
-- **D(t)**: Dimension transition factor (such as transitioning from 3D to 4D).
-
-The formula is given by:
-
-$$\rho(t) = \frac{V_{shape}}{S(t) \cdot D(t)}$$
-
-To define the time curvature in terms of the density:
-
-$$T_{curvature}(t) = \frac{1}{\rho(t)} = \frac{S(t) \cdot D(t)}{V_{shape}}$$
-
-## Interpretation
-
-- When shapes are more compressed (as in the collapse of the tesseract), S(t) → 0, leading to ρ(t) → ∞ and time curvature spikes, suggesting the Big Crunch.
-- As the universe begins to emerge, V_shape → 0, and once again ρ(t) → ∞, signaling an undefined time or the Big Bang.
-
-## Example Time-Density Functions
-
-Here are plausible example functions that model the compression and expansion of the universe:
-
-Projection factor from 4D → 3D (Tesseract Rotation):
-
-$$S(t) = \frac{1}{1 + \sin^2(\omega t)}$$
-
-Dimension Expansion Factor:
-
-$$D(t) = 1 + \alpha t^2$$
-
-Where:
-- ω is the rotation factor for the tesseract.
-- α is a constant controlling the rate of expansion over time.
-
-Now, the full Time-Density function becomes:
-
-$$\rho(t) = \frac{V_{shape}}{(1 + \sin^2(\omega t)) \cdot (1 + \alpha t^2)}$$
-
-And for the curvature:
-
-$$T_{curvature}(t) = \frac{(1 + \sin^2(\omega t)) \cdot (1 + \alpha t^2)}{V_{shape}}$$
-
-## Why This is New
-
-**Nonlinear Time Concept**: By relating time directly to the geometric density of space, this approach introduces a novel way to view cosmological events like the Big Bang and Big Crunch. Traditional models often treat time as linear, but here, we propose that time behaves as a function of geometric density, potentially offering new insights into the nature of time itself.
-
-**Tesseract and 4D Geometry**: Using the tesseract as a 4D reference frame for the evolution of space-time is innovative. The concept of projecting from 4D back to 3D and its impact on space-time is a step beyond traditional 3D models.
-
-**Geometric Density Over Time**: This method directly correlates the shape's density to the behavior of the universe's space-time structure over time. It's a new mathematical way of relating how space-time behaves near singularities.
-
-## GitHub Repository Contents
-
-This repository contains:
-
-- **Time-Density Geometry Functions**: The mathematical functions used to model the Big Bang, Big Crunch, and other cosmological phenomena.
-- **WebGL Visualization**: An interactive 3D/4D visualization of the time-density effects. Still working on this.
-- **Python Scripts**: Code to plot and simulate these functions over time.
-
-Feel free to contribute, enhance the mathematical models, or help improve the visualizations! 🌌
-
-## Usage
-
-To use the visualization or mathematical models, clone the repository and follow the instructions in this README file.
-
-## Updated Concept: Time Density + Temporal Flow Ratio
-
-We'll define a new function:
+Building on our base model, we'll define a new function:
 
 ### 🕒 R(t) — Temporal Flow Ratio
 
@@ -417,7 +275,7 @@ Far from singularities (t → ∞):
 - R(t) → 1,
 - Normal time resumes.
 
-### 🧠 Optional:
+### 🧠 Optional: Perceived Time Function
 
 We can also model a perceived time function:
 
@@ -425,26 +283,7 @@ $$T_{perceived}(t) = \int_{0}^{t} R(\tau) d\tau$$
 
 This would graph how much "experienced" time has passed since the singularity, as a smoother curve.
 
-## Your Original Theory (Simplified)
-
-You proposed:
-
-As space contracts or expands, time becomes nonlinear and is related to geometric density (how much "shape" fits into a unit of space).
-
-With the original formula:
-
-$$\rho(t) = \frac{V_{shape}}{S(t) \cdot D(t)}$$
-
-$$T_{curvature}(t) = \frac{1}{\rho(t)} = \frac{S(t) \cdot D(t)}{V_{shape}}$$
-
-This captured:
-- Volume (V_shape)
-- Compression/Projection (S(t))
-- Dimensional growth over time (D(t))
-
-It described how nonlinear time results from geometry + dimensional shifts, especially in Big Bang / Big Crunch scenarios.
-
-### 🧠 Unified Time Curvature Formula (Expanded)
+## 🧠 Unified Time Curvature Formula (Expanded)
 
 $$\rho(t) = \frac{V_{shape}}{S(t) \cdot D(t) \cdot G(t)}$$
 
@@ -452,12 +291,12 @@ $$T_{curvature}(t) = \frac{S(t) \cdot D(t) \cdot G(t)}{V_{shape}}$$
 
 $$T_{perceived}(t) = \frac{S(t) \cdot D(t) \cdot G(t)}{V_{shape} \cdot f_{brain}(t)}$$
 
-This includes everything in your original theory, but adds:
+This includes everything in our original theory, but adds:
 
 - **G(t)** = Gravitational Time Dilation → makes the formula consistent with Einstein's relativity.
-- **f_brain(t)** = Perception factor → connects your theory to conscious time and human experience.
+- **f_brain(t)** = Perception factor → connects our theory to conscious time and human experience.
 
-### 🌌 Why the Unified Formula Looks Bigger (but is the Same at the Core):
+### 🌌 Components of the Unified Formula:
 
 | Concept | Original | Unified | Notes |
 |---------|----------|---------|-------|
@@ -467,22 +306,16 @@ This includes everything in your original theory, but adds:
 | Gravity effect | ❌ | ✅ | G(t) |
 | Human perception | ❌ | ✅ | P(t) = 1/f_brain(t) |
 
-### 🧩 Conclusion
+The unified formula expands our model to include:
 
-✅ Yes, the Unified formula still includes and honors your first theory — it just adds realism and scope so we can model:
-
-- Black holes, time warping
+- Black holes and time warping
 - Brainwave-speed perception
 - Big Bang / Crunch scenarios
 - Simulation of time through geometry and consciousness
 
-# Genesis-Sphere Project
-
-This project simulates gravitational time dilation and other relativistic effects to explore temporal dynamics near massive objects.
-
 ## Mathematical Formulation Originality
 
-To verify the proof or originality of the formulations provided, we need to examine the mathematical concepts involved. Let's break it down:
+To verify the proof of originality of the formulations provided, we need to examine the mathematical concepts involved:
 
 ### 1. Time-Density Geometry Function
 **Formulation:**
@@ -504,7 +337,7 @@ The dimension expansion factor (1 + alpha * t²) suggests an accelerating expans
 
 The space-time density (rho_t) integrates both of these factors, providing a novel approach for modeling space-time evolution over time, potentially useful for cosmological or relativistic theories.
 
-**Conclusion:** While the components (sine-based projections, dimension expansion, and time-density) exist in various forms in physics, the combination and the exact formulation provided seem novel in this specific form, at least in the context of your description.
+**Conclusion:** While the components (sine-based projections, dimension expansion, and time-density) exist in various forms in physics, the combination and the exact formulation provided seem novel in this specific form.
 
 ### 2. Temporal Flow Ratio
 **Formulation:**
@@ -525,14 +358,6 @@ The inclusion of epsilon prevents a singularity when t approaches zero, which is
 This formula may resemble models for gravitational time dilation or cosmological models, but its exact form appears to be a new attempt to model "time flow" in a more generalized context, likely referring to time behavior near singularities.
 
 **Conclusion:** The underlying idea (time dilation or temporal flow ratio) is rooted in well-known relativistic principles, but the exact formulation provided appears original, especially with the inclusion of the epsilon term to prevent singularities and its direct relation to time-flow near critical points.
-
-## Originality Statement
-
-The mathematical formulations presented in this project were created by me, while the summary and analysis of these formulations were AI-generated by GitHub Copilot.
-
-Both formulations are grounded in familiar mathematical techniques (trigonometric functions, time dilation, space-time curvature), but the specific implementations and interrelations of these techniques in the equations do not appear to be a standard representation in the literature. The approach is novel, particularly the integration of dimension expansion with time density and a hyperbolic-like ratio for time flow near singularities.
-
-While the conceptual foundations (like time dilation or dimension expansion) have precedent in physics, the mathematical execution offered, especially in the context of space-time density and temporal flow ratio, seems original in its combination and specific usage.
 
 ## Research Validation and Literature Context
 
@@ -594,3 +419,49 @@ While the mathematical formulations presented in this project build upon well-es
 The integration of dimension expansion with time density (as in the Time-Density Geometry Function) and the regularized hyperbolic approach to time flow near singularities (as in the Temporal Flow Ratio) represent novel mathematical approaches to modeling these complex physical phenomena.
 
 To fully validate these formulations, further scrutiny within academic circles and peer review would be necessary. However, based on current literature review, these formulations appear to offer a unique mathematical framework for understanding space-time behavior, particularly near cosmic singularities.
+
+## Originality Statement
+
+The mathematical formulations presented in this project were created by me, while the summary and analysis of these formulations were AI-generated.
+
+## Why It Matters
+
+Understanding the relationship between time, space, and singularities is crucial for advancing our knowledge of the universe's origin and potential fate. This project aims to present these abstract concepts in a form that is both visually engaging and scientifically accurate. It offers an alternative way of looking at cosmology through geometric metaphors and dynamic simulations.
+
+By publishing this project as an open-source resource, we hope to encourage further exploration of time, space, and cosmology. Whether you're a scientist, a student, or someone curious about the mysteries of the universe, this project aims to inspire a deeper understanding of the cosmos.
+
+## How to Contribute
+
+We welcome contributions from the community! If you have ideas for improving the simulations, enhancing the visuals, or extending the project, feel free to fork the repository and submit a pull request.
+
+**Bug Fixes**: If you notice any bugs or issues, please report them through GitHub issues.
+
+**Feature Requests**: We are open to suggestions for new features, such as additional visualizations or more advanced models of space-time behavior.
+
+**Documentation**: Contributions to improve the documentation or add new examples are always appreciated.
+
+## Getting Started
+
+To get started with the project, clone the repository and install the required dependencies:
+
+```bash
+git clone https://github.com/yourusername/emergent-space-time.git
+cd emergent-space-time
+pip install -r requirements.txt
+```
+
+## License
+
+This project is licensed under the MIT License — see the LICENSE file for details.
+
+## Connect with Us
+
+We encourage collaboration and discussions about the project. You can reach out to us or share your thoughts via the following channels:
+
+**GitHub Issues**: For bug reports and feature requests.
+
+**Discussion Forum**: Engage with the community to share insights and ideas.
+
+**Email**: [sszukala at gmail dot com]
+
+Thank you for exploring the Emergent Space-Time project! We hope it sparks curiosity and provides a fresh perspective on the nature of the universe and time itself.
