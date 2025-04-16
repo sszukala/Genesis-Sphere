@@ -1,5 +1,7 @@
 # Genesis Sphere
  
+Warn somestuff is still working on for imaging
+
 Emergent Space-Time: Visualizing the Big Bang, Big Crunch, and Singularities in 4D Geometry
 Welcome to the Emergent Space-Time project! This open-source initiative explores the profound relationship between time, space, and singularities by using dynamic 3D and 4D geometry to represent the collapse and dilation of the universe at extreme conditions — specifically during the Big Bang and Big Crunch scenarios.
 
