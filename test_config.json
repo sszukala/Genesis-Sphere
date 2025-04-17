@@ -1,0 +1,12 @@
+{
+  "standard_input": "athena-docker/inputs/test_problem.in",
+  "standard_output": "test_standard",
+  "time_density_input": "athena-docker/inputs/test_problem.in",
+  "time_density_output": "test_time_density",
+  "td_params": {
+    "alpha": 0.02,
+    "omega": 2.0,
+    "beta": 0.5,
+    "epsilon": 0.001
+  }
+}

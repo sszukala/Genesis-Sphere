@@ -45,11 +45,31 @@ def run_docker_simulation(simulation_type, input_file, output_prefix):
     # Execute the command
     try:
         print(f"Running command: {' '.join(cmd)}")
-        subprocess.run(cmd, check=True)
+        # Capture the output to check for errors
+        process = subprocess.run(cmd, check=True, capture_output=True, text=True)
+        
+        # Check if the output contains a fatal error message
+        if "FATAL ERROR" in process.stdout or "FATAL ERROR" in process.stderr:
+            print(f"Athena simulation failed with error:")
+            print(process.stdout)
+            print(process.stderr)
+            return False
+            
         print(f"Successfully completed {simulation_type} simulation.")
+        
+        # Check if output files were created
+        expected_file = os.path.join(OUTPUT_DIR, f"{output_prefix}.out1.00000")
+        if not os.path.exists(expected_file):
+            print(f"Warning: Output file {expected_file} was not created.")
+            return False
+            
         return True
     except subprocess.CalledProcessError as e:
         print(f"Error running {simulation_type} simulation: {e}")
+        if e.stdout:
+            print(f"stdout: {e.stdout}")
+        if e.stderr:
+            print(f"stderr: {e.stderr}")
         return False
 
 def load_simulation_data(filename):

@@ -694,17 +694,24 @@ If you encounter issues running the simulations:
    </block_name>
    ```
 
-2. **Missing Output Files**: Check that:
+2. **Boundary Condition Errors**: Athena only accepts specific boundary types:
+   - `reflecting` - reflection boundary conditions
+   - `periodic` - periodic boundary conditions 
+   - `user` - user-defined boundary conditions
+   
+   Common boundary types like "outflow" or "inflow" may not be recognized.
+
+3. **Missing Output Files**: Check that:
    - Docker has proper permissions to write to your file system
    - The Docker mount point is correct (use absolute paths if needed)
    - The OUTPUT_DIR exists (default: "simulation_results")
 
-3. **Docker Issues**:
+4. **Docker Issues**:
    - Verify Docker is running properly with `docker ps`
    - Try rebuilding the Athena Docker image: `docker build -t athena-custom ./athena-docker`
    - For Windows users, ensure Docker Desktop is configured to share your drives
 
-4. **Manual Verification**:
+5. **Manual Verification**:
    You can verify the Athena setup inside the Docker container:
    ```bash
    # Enter a Docker container interactively

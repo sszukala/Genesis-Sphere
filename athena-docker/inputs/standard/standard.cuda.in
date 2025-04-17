@@ -5,7 +5,7 @@ Basic test configuration for CUDA-accelerated runs
 
 <job>
   problem_id = blast
-  coord      = cartesian  # This is correct - it's using Cartesian coordinates for this specific problem
+  coord      = cartesian  # Changed from spherical to cartesian
   eos        = adiabatic
 </job>
 
@@ -24,12 +24,12 @@ Basic test configuration for CUDA-accelerated runs
   x3max = 1.0
   
   # Boundary conditions
-  ix1_bc = reflecting
-  ox1_bc = reflecting
-  ix2_bc = reflecting
-  ox2_bc = reflecting
-  ix3_bc = reflecting
-  ox3_bc = reflecting
+  ix1_bc = outflow
+  ox1_bc = outflow
+  ix2_bc = outflow
+  ox2_bc = outflow
+  ix3_bc = outflow
+  ox3_bc = outflow
 </mesh>
 
 <time>

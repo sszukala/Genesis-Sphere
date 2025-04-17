@@ -1,0 +1,51 @@
+<comment>
+Very simple test problem with valid boundary conditions
+</comment>
+
+<job>
+  problem_id = blast
+  coord      = cartesian
+  eos        = adiabatic
+</job>
+
+<mesh>
+  nx1 = 64
+  x1min = 0.0
+  x1max = 1.0
+  
+  nx2 = 64
+  x2min = 0.0
+  x2max = 1.0
+  
+  nx3 = 1
+  x3min = 0.0
+  x3max = 1.0
+  
+  # Valid boundary conditions for Athena
+  ix1_bc = reflecting
+  ox1_bc = reflecting
+  ix2_bc = reflecting
+  ox2_bc = reflecting
+  ix3_bc = reflecting
+  ox3_bc = reflecting
+</mesh>
+
+<time>
+  tlim = 0.1
+  ncycle_out = 1
+  cfl_number = 0.3
+</time>
+
+<hydro>
+  gamma = 1.4
+</hydro>
+
+<problem>
+  radius = 0.1
+  center_x1 = 0.5
+  center_x2 = 0.5
+  ambient_density = 1.0
+  blast_density = 10.0
+  ambient_pressure = 0.1
+  blast_pressure = 10.0
+</problem>
