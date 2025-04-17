@@ -22,13 +22,13 @@ Using minimal settings to ensure compatibility
   x3min = 0.0
   x3max = 0.01
   
-  # Specific boundary conditions for spherical coordinates
-  ix1_bc = outflow      # Inner radial boundary
-  ox1_bc = outflow      # Outer radial boundary
-  ix2_bc = polar_wedge  # Theta minimum (pole)
-  ox2_bc = polar_wedge  # Theta maximum (pole)
-  ix3_bc = periodic     # Phi minimum
-  ox3_bc = periodic     # Phi maximum
+  # Changed to valid boundary conditions
+  ix1_bc = reflecting      # Inner radial boundary
+  ox1_bc = reflecting      # Outer radial boundary
+  ix2_bc = reflecting      # Theta minimum (pole)
+  ox2_bc = reflecting      # Theta maximum (pole)
+  ix3_bc = reflecting      # Phi minimum
+  ox3_bc = reflecting      # Phi maximum
 </mesh>
 
 <time>
@@ -54,9 +54,10 @@ Using minimal settings to ensure compatibility
 
 <problem>
   # Required parameters based on error message
-  radius = 0.5             # Required by Athena - add it even for time_density
+  radius = 0.5             # Required by Athena
   center_x1 = 1.0          # Center of the simulation in r
   center_x2 = 1.57         # Center in theta (π/2)
+  prat = 1.0               # Added missing parameter
   
   # Our time_density parameters
   alpha = 0.02             # dimension expansion parameter

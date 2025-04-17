@@ -1,5 +1,5 @@
 <comment>
-Very minimal blast problem - with valid reflecting boundary conditions
+Alternative test with outflow boundary conditions
 </comment>
 
 <job>
@@ -21,17 +21,17 @@ Very minimal blast problem - with valid reflecting boundary conditions
   x3min = 0.0
   x3max = 1.0
   
-  # Changed to reflecting boundaries (valid in this build)
-  ix1_bc = reflecting
-  ox1_bc = reflecting
-  ix2_bc = reflecting
-  ox2_bc = reflecting
-  ix3_bc = reflecting
-  ox3_bc = reflecting
+  # Try outflow boundaries
+  ix1_bc = outflow
+  ox1_bc = outflow
+  ix2_bc = outflow
+  ox2_bc = outflow
+  ix3_bc = outflow
+  ox3_bc = outflow
 </mesh>
 
 <time>
-  tlim = 0.1
+  tlim = 0.01
   ncycle_out = 1
   cfl_number = 0.3
 </time>

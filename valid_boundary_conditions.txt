@@ -1,0 +1,35 @@
+# Valid Athena Boundary Conditions Reference
+
+This document lists boundary condition types that may be valid in your Athena build.
+Try these options if you encounter boundary condition errors.
+
+## Common Boundary Types
+
+- `outflow` - zero-gradient outflow boundary
+- `periodic` - periodic boundary (wraps around to the other side)
+- `user` - user-defined boundary condition
+- `dirichlet` - Dirichlet boundary conditions (fixed values)
+- `polar_wedge` - polar wedge boundary (for spherical polar coordinates)
+
+## Notes on Docker vs Local Builds
+
+The Docker container and your local build may have different available boundary conditions
+depending on how they were configured. If one boundary type doesn't work, try another.
+
+## How to Check Available Boundary Types
+
+To see which boundary types are supported in your current build, you can look at the 
+source code in:
+
+```
+athena/src/bvals/bvals.hpp
+```
+
+Look for definitions like `enum class BoundaryFlag` or similar that list the valid options.
+
+## Most Compatible Options
+
+Based on experience, the following boundary types tend to be the most universally available:
+1. `outflow`
+2. `periodic`
+3. `user`

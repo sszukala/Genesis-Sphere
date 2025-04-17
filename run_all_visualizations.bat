@@ -1,4 +1,5 @@
 @echo off
+
 echo Running all visualization scripts...
 
 echo Installing dependencies from requirements.txt
@@ -23,6 +24,7 @@ python genesis_timespace.py
 echo.
 echo All visualizations have been generated in the timespace_sim directory
 echo.
+
 dir .\timespace_sim\*.gif
 
 pause

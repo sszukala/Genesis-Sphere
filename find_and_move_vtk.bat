@@ -1,4 +1,5 @@
 @echo off
+
 echo === Finding and organizing VTK files ===
 echo.
 

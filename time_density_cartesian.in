@@ -1,5 +1,5 @@
 <comment>
-Time-Density Geometry model with cartesian coordinates - using minimal settings
+Time-Density Geometry model with cartesian coordinates - using valid boundary conditions
 </comment>
 
 <job>
@@ -21,14 +21,19 @@ Time-Density Geometry model with cartesian coordinates - using minimal settings
   x3min = -0.1
   x3max = 0.1
   
-  # Remove all boundary condition specifications
-  # Let Athena use its built-in defaults
+  # Add valid boundary conditions
+  ix1_bc = reflecting
+  ox1_bc = reflecting
+  ix2_bc = reflecting
+  ox2_bc = reflecting
+  ix3_bc = reflecting
+  ox3_bc = reflecting
 </mesh>
 
 <time>
   cfl_number = 0.3
   tlim = 1.0
-  integrator = vl2
+  integrator = rk2
   xorder = 2
   ncycle_out = 1
 </time>
@@ -45,9 +50,22 @@ Time-Density Geometry model with cartesian coordinates - using minimal settings
 </hydro>
 
 <problem>
+  # Need to add blast problem required parameters
+  radius = 0.5
+  center_x1 = 0.0
+  center_x2 = 0.0
+  prat = 1.0
+  
+  # Time-density parameters
   alpha = 0.02    # dimension expansion parameter
   omega = 2.0     # projection factor parameter
   beta = 0.5      # temporal drag coefficient
   epsilon = 0.001 # singularity avoidance parameter
   pressure = 1.0  # initial pressure
+  
+  # Additional parameters that might be needed
+  ambient_density = 1.0
+  blast_density = 1.0
+  ambient_pressure = 1.0
+  blast_pressure = 1.0
 </problem>

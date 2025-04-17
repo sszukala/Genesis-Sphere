@@ -1,5 +1,5 @@
 <comment>
-Basic blast problem with minimal settings
+Basic blast problem with minimal settings and valid boundary conditions
 </comment>
 
 <job>
@@ -21,12 +21,13 @@ Basic blast problem with minimal settings
   x3min = 0.0
   x3max = 0.01
   
-  ix1_bc = outflow
-  ox1_bc = outflow
-  ix2_bc = polar_wedge
-  ox2_bc = polar_wedge
-  ix3_bc = periodic
-  ox3_bc = periodic
+  # Changed to reflecting boundaries
+  ix1_bc = reflecting
+  ox1_bc = reflecting
+  ix2_bc = reflecting
+  ox2_bc = reflecting
+  ix3_bc = reflecting
+  ox3_bc = reflecting
 </mesh>
 
 <time>

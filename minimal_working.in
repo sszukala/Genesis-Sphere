@@ -1,5 +1,5 @@
 <comment>
-Very minimal blast problem - with valid reflecting boundary conditions
+Minimal test file with valid boundary conditions
 </comment>
 
 <job>
@@ -21,7 +21,7 @@ Very minimal blast problem - with valid reflecting boundary conditions
   x3min = 0.0
   x3max = 1.0
   
-  # Changed to reflecting boundaries (valid in this build)
+  # Using reflecting boundaries instead of periodic
   ix1_bc = reflecting
   ox1_bc = reflecting
   ix2_bc = reflecting
@@ -31,7 +31,7 @@ Very minimal blast problem - with valid reflecting boundary conditions
 </mesh>
 
 <time>
-  tlim = 0.1
+  tlim = 0.01
   ncycle_out = 1
   cfl_number = 0.3
 </time>

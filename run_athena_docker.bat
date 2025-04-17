@@ -1,3 +1,5 @@
 @echo off
+
 echo Starting Athena Docker container...
-docker run -it --rm -v "%~dp0:/workspace" athena-custom
+
+docker run -it --rm -v "%cd%:/workspace" athena-custom

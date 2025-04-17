@@ -2,6 +2,7 @@
 # Helper script to find and analyze Athena simulation outputs
 
 echo "=== Searching for Athena output files... ==="
+
 echo "Looking in current directory:"
 find . -maxdepth 1 -name "*.out*" | sort
 
@@ -21,6 +22,7 @@ echo -e "\n=== ANALYSIS INSTRUCTIONS ==="
 echo "If you found output files, try analyzing them with:"
 echo "python3 /workspace/athena-docker/fixed_analysis.py <output_file> analysis_result.png"
 echo
+
 echo "If files don't exist, your simulation may have:"
 echo "1. Written to a different directory"
 echo "2. Used a different naming convention"

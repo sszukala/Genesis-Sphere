@@ -1,4 +1,5 @@
 @echo off
+
 echo === Searching for Athena output files... ===
 echo.
 
@@ -22,6 +23,7 @@ echo === ANALYSIS INSTRUCTIONS ===
 echo If you found output files, try analyzing them with:
 echo python athena-docker\fixed_analysis.py [output_file] analysis_result.png 0.02 2.0 0.5 0.001
 echo.
+
 echo Parameters: alpha=0.02, omega=2.0, beta=0.5, epsilon=0.001
 echo.
 
