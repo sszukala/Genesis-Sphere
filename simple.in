@@ -1,9 +1,9 @@
 <comment>
-Time-Density Geometry model with cartesian coordinates - simplified version
+Simple cartesian simulation with our time-density model
 </comment>
 
 <job>
-  problem_id = time_density
+  problem_id = time_density  # Using our custom time_density problem
   coord      = cartesian
   eos        = adiabatic
 </job>
@@ -21,7 +21,7 @@ Time-Density Geometry model with cartesian coordinates - simplified version
   x3min = -0.1
   x3max = 0.1
   
-  # Use reflecting instead of outflow (outflow is invalid)
+  # Valid boundary conditions for Athena
   ix1_bc = reflecting
   ox1_bc = reflecting
   ix2_bc = reflecting
@@ -32,7 +32,7 @@ Time-Density Geometry model with cartesian coordinates - simplified version
 
 <time>
   cfl_number = 0.3
-  tlim = 1.0        # Set to 1.0 to match your previous run
+  tlim = 1.0        # Time limit = 1.0
   integrator = vl2
   xorder = 2
   ncycle_out = 1
