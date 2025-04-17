@@ -39,6 +39,14 @@ Using user boundary conditions which should be valid for this Athena build
   ncycle_out = 1
 </time>
 
+<output1>
+  file_type  = vtk        # VTK output format
+  variable   = prim       # write primitive variables
+  dt         = 0.1        # time increment between outputs
+  id         = fixed      # specify an ID for the output
+  out_dir    = /workspace # write files to /workspace (mounted volume)
+</output1>
+
 <hydro>
   gamma = 1.666667
 </hydro>
