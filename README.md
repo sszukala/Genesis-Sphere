@@ -755,6 +755,80 @@ If you encounter issues running the simulations:
 
 The workflow automatically handles Docker container management, simulation execution, and results analysis, providing a seamless validation pipeline for our theoretical models.
 
+## Transitioning from Athena++ to GRChombo for Numerical Validation
+
+### Current Status with Athena++
+
+While we've made progress implementing our Time-Density Geometry model in Athena++, we've encountered several configuration and implementation challenges (see [ISSUES.md](./ISSUES.md) for details). Key issues include boundary condition compatibility, Docker integration problems, and output file generation inconsistencies.
+
+### Moving to GRChombo for Advanced Validation
+
+We're now exploring [GRChombo](https://www.grchombo.org/) as our primary validation platform, which offers several advantages for our specific mathematical formulations:
+
+#### Why GRChombo is Ideal for Our Validation Needs
+
+1. **True General Relativistic Framework**: Unlike Athena++, GRChombo directly solves Einstein's equations in full 3+1 dimensions, making it more suitable for validating the gravitational aspects of our Time-Density Geometry model.
+
+2. **Native Support for Space-Time Curvature**: GRChombo naturally handles curved space-time metrics, allowing us to directly model the space-time density relationships expressed in our formulations:
+   - Time-Density function: ρ(t) = S(t)·D(t)
+   - Temporal Flow Ratio: R(t) = 1/(1+β/(|t|+ε))
+
+3. **Adaptive Mesh Refinement (AMR)**: GRChombo's AMR capabilities provide high-resolution simulations near singularities while maintaining computational efficiency, perfect for studying time behavior near Big Bang/Crunch points.
+
+4. **Black Hole Evolution**: GRChombo's proven track record with black hole simulations will help us validate our Temporal Flow Ratio predictions regarding time flow near event horizons.
+
+5. **BSSN Formalism Implementation**: The Baumgarte-Shapiro-Shibata-Nakamura formalism in GRChombo aligns with our mathematical approach to representing time curvature.
+
+#### Validation Plan Using GRChombo
+
+We're implementing a staged validation approach:
+
+1. **Single Black Hole Validation**: Testing time dilation effects near a single black hole horizon to validate the R(t) component of our model.
+
+2. **Cosmological Expansion Simulation**: Implementing a simplified FLRW (Friedmann-Lemaître-Robertson-Walker) metric to test our Time-Density function's predictions about space expansion.
+
+3. **Singularity Approach Behavior**: Most importantly, examining the behavior of time near singularities to validate our prediction that time effectively "freezes" as ρ(t) approaches infinity.
+
+4. **Comparative Analysis**: Creating quantitative comparisons between analytical predictions from our formulas and GRChombo's numerical solutions.
+
+#### Getting Started with GRChombo (Development Plan)
+
+To run GRChombo validations:
+
+1. **Prerequisites**: 
+   - C++11 compatible compiler
+   - MPI
+   - HDF5
+   - Chombo library dependencies
+
+2. **Installation**:
+   ```bash
+   # Clone GRChombo
+   git clone https://github.com/GRChombo/GRChombo.git
+   
+   # Set environment variables (customize for your system)
+   export WORK=/path/to/work/directory
+   export GRCHOMBO_SOURCE=$WORK/GRChombo
+   export PATH=$WORK/bin:$PATH
+   
+   # Build GRChombo (basic example)
+   cd $GRCHOMBO_SOURCE/Examples/BinaryBlackHole
+   make
+   ```
+
+3. **Initial Simulations**: We'll begin with the `ScalarField` example as it maps well to our density field concept, followed by black hole simulations.
+
+4. **Custom Model Implementation**: Our team is currently developing a custom simulation module to directly model our Time-Density and Temporal Flow Ratio formulations.
+
+We'll provide more detailed documentation on our GRChombo validation approach in upcoming updates. This transition represents a significant advancement in our ability to rigorously validate the mathematical foundations of our Time-Density Geometry model.
+
+## Next Steps in Development
+
+- Complete custom GRChombo implementation
+- Perform benchmark simulations comparing analytical predictions to numerical results
+- Expand visualization tools to support GRChombo output formats
+- Address outstanding issues documented in [ISSUES.md](./ISSUES.md) (many will be resolved by switching to GRChombo)
+
 ## License
 
 This project is licensed under the MIT License — see the LICENSE file for details.
