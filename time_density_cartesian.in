@@ -37,6 +37,7 @@ Time-Density Geometry model with cartesian coordinates - using minimal settings
   file_type  = vtk      # VTK output format
   variable   = prim     # write primitive variables
   dt         = 0.1      # time increment between outputs
+  out_dir    = vtk_output  # Add this line to specify output directory
 </output1>
 
 <hydro>
