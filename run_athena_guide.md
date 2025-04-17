@@ -28,16 +28,20 @@ docker run -it --rm -v "%cd%:/workspace" athena-custom
 
 ## Once Inside Docker Container
 
-After successfully entering the Docker container, you'll see a prompt like `root@container:/workspace#`. Then run:
+After successfully entering the Docker container, you'll see a prompt like `root@container:/workspace#`. Then run the following commands:
 
+### Run Athena with your input file:
 ```bash
-# Run Athena with your input file
 /athena/bin/athena -i time_density_spherical_fixed.in -otime_density_fixed
+```
 
-# If you encounter errors, check input file syntax:
+### If you encounter errors, check input file syntax:
+```bash
 cat time_density_spherical_fixed.in
+```
 
-# To exit the container when done
+### To exit the container when done:
+```bash
 exit
 ```
 
