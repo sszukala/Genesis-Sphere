@@ -1,5 +1,5 @@
 <comment>
-Minimal blast problem - stripped down to essential parameters
+Minimal blast problem - trying "dirichlet" boundary conditions
 </comment>
 
 <job>
@@ -20,6 +20,14 @@ Minimal blast problem - stripped down to essential parameters
   nx3 = 1
   x3min = 0.0
   x3max = 1.0
+  
+  # Try "dirichlet" boundary conditions explicitly
+  ix1_bc = dirichlet
+  ox1_bc = dirichlet
+  ix2_bc = dirichlet
+  ox2_bc = dirichlet
+  ix3_bc = dirichlet
+  ox3_bc = dirichlet
 </mesh>
 
 <time>
