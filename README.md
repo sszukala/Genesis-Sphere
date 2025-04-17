@@ -663,6 +663,8 @@ docker run -it -v "C:\Users\sszuk\OneDrive\Desktop\Genesis ETL Project\Sphere\Ge
 
 #### Running the Simulation Workflow
 
+The simulation comparison tool runs Docker containers automatically, so you should execute these commands from your host system (Windows PowerShell or Command Prompt), not from inside a container:
+
 ```bash
 # Basic comparison (using existing simulation results)
 python compare_simulations.py
@@ -676,6 +678,44 @@ python compare_simulations.py --output-dir "my_results"
 # Run with a specific configuration file
 python compare_simulations.py --config custom_config.json
 ```
+
+> **Important**: If you see a Docker prompt like `root@container:/workspace#`, you're inside a Docker container. Type `exit` to return to your host system before running these commands.
+
+The workflow automatically handles Docker container management, simulation execution, and results analysis, providing a seamless validation pipeline for our theoretical models.
+
+#### Troubleshooting Simulation Issues
+
+If you encounter issues running the simulations:
+
+1. **Input File Errors**: Ensure all input files (*.athinput and *.in) have proper block structure with each section enclosed in angle brackets:
+   ```
+   <block_name>
+   parameter = value
+   </block_name>
+   ```
+
+2. **Missing Output Files**: Check that:
+   - Docker has proper permissions to write to your file system
+   - The Docker mount point is correct (use absolute paths if needed)
+   - The OUTPUT_DIR exists (default: "simulation_results")
+
+3. **Docker Issues**:
+   - Verify Docker is running properly with `docker ps`
+   - Try rebuilding the Athena Docker image: `docker build -t athena-custom ./athena-docker`
+   - For Windows users, ensure Docker Desktop is configured to share your drives
+
+4. **Manual Verification**:
+   You can verify the Athena setup inside the Docker container:
+   ```bash
+   # Enter a Docker container interactively
+   docker run -it --rm -v ${PWD}:/workspace athena-custom
+   
+   # Inside the container, try running Athena manually
+   /athena/bin/athena -i athena-docker/inputs/standard/standard.cuda.in -o test
+   
+   # Check if output files were created
+   ls -la
+   ```
 
 The workflow automatically handles Docker container management, simulation execution, and results analysis, providing a seamless validation pipeline for our theoretical models.
 

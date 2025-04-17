@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
 RUN pip3 install numpy matplotlib h5py scipy astropy
 
 # Set up a helper script for rebuilding
-RUN echo '#!/bin/bash\ncd /athena\npython3 configure.py --prob=blast --coord=spherical-polar --flux=hllc\nmake clean\nmake -j$(nproc)' > /usr/local/bin/rebuild-athena \
+RUN echo '#!/bin/bash\ncd /athena\npython3 configure.py --prob=blast --coord=spherical_polar --flux=hllc\nmake clean\nmake -j$(nproc)' > /usr/local/bin/rebuild-athena \
     && chmod +x /usr/local/bin/rebuild-athena
 
 # Clone Athena repository
@@ -33,7 +33,7 @@ RUN git clone https://github.com/PrincetonUniversity/athena.git /athena
 
 # Build Athena
 WORKDIR /athena
-RUN python3 configure.py --prob=blast --coord=spherical-polar --flux=hllc
+RUN python3 configure.py --prob=blast --coord=spherical_polar --flux=hllc
 RUN make -j$(nproc)
 
 # Create scripts to run example problems

@@ -17,6 +17,8 @@ R(t) = 1 / (1 + β/(|t| + ε))
 
 <job>
 problem_id = time_density  # problem ID: prefix for output filenames
+coord      = cartesian    # coordinate system
+eos        = adiabatic    # equation of state
 </job>
 
 <output1>

@@ -1,9 +1,11 @@
-# Standard blast problem with uniform initial conditions
-# Basic test configuration for CUDA-accelerated runs
+<comment>
+Standard blast problem with uniform initial conditions
+Basic test configuration for CUDA-accelerated runs
+</comment>
 
 <job>
   problem_id = blast
-  coord      = cartesian
+  coord      = cartesian  # This is correct - it's using Cartesian coordinates for this specific problem
   eos        = adiabatic
 </job>
 
