@@ -35,7 +35,6 @@ Using minimal settings to ensure compatibility
   cfl_number = 0.3
   tlim = 2.0
   integrator = vl2
-  xorder = 2
   ncycle_out = 1
 </time>
 
@@ -49,7 +48,8 @@ Using minimal settings to ensure compatibility
 
 <hydro>
   gamma = 1.666667
-  xorder = 2        # Use this instead of "reconstruct"
+  xorder = 2        # Reconstruction order
+  reconstruction = plm  # Valid reconstruction method: PLM (Piecewise Linear Method)
 </hydro>
 
 <problem>
