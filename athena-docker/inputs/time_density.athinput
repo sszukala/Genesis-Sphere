@@ -1,0 +1,68 @@
+# Athena++ input file for Time-Density Geometry model
+# This initializes a simulation with uniform density based on the time-density function
+
+<comment>
+Problem: Time-Density Geometry model
+Configured to test the time-density relationship from Genesis Sphere research
+
+The problem starts with a uniform density derived from:
+ρ(t) = S(t) × D(t)
+where:
+- S(t) = 1 / (1 + sin²(ωt)) is the projection factor
+- D(t) = 1 + αt² is the dimension expansion factor
+
+The velocities and pressure are modulated by the temporal flow ratio:
+R(t) = 1 / (1 + β/(|t| + ε))
+</comment>
+
+<job>
+problem_id = time_density  # problem ID: prefix for output filenames
+</job>
+
+<output1>
+file_type = hdf5         # HDF5 data dump
+variable  = prim         # output primitive variables
+dt        = 0.1          # time increment between outputs
+</output1>
+
+<time>
+cfl_number = 0.3         # The Courant, Friedrichs, & Lewy number
+nlim       = -1          # cycle limit
+tlim       = 5.0         # time limit
+integrator = vl2         # time integration algorithm
+xorder     = 2           # spatial order of accuracy
+ncycle_out = 1           # interval for stdout summary info
+</time>
+
+<mesh>
+nx1        = 64          # Number of zones in X1-direction
+x1min      = -1.0        # minimum value of X1
+x1max      = 1.0         # maximum value of X1
+ix1_bc     = outflow     # inner-X1 boundary condition flag
+ox1_bc     = outflow     # outer-X1 boundary condition flag
+
+nx2        = 64          # Number of zones in X2-direction
+x2min      = -1.0        # minimum value of X2
+x2max      = 1.0         # maximum value of X2
+ix2_bc     = outflow     # inner-X2 boundary condition flag
+ox2_bc     = outflow     # outer-X2 boundary condition flag
+
+nx3        = 1           # Number of zones in X3-direction
+x3min      = -0.1        # minimum value of X3
+x3max      = 0.1         # maximum value of X3
+ix3_bc     = outflow     # inner-X3 boundary condition flag
+ox3_bc     = outflow     # outer-X3 boundary condition flag
+</mesh>
+
+<hydro>
+gamma = 1.666667         # ratio of specific heats
+iso_sound_speed = 1.0    # isothermal sound speed
+</hydro>
+
+<problem>
+alpha       = 0.02       # dimension expansion parameter
+omega       = 2.0        # projection factor parameter
+beta        = 0.5        # temporal drag coefficient
+epsilon     = 0.001      # singularity avoidance parameter
+pressure    = 1.0        # initial pressure
+</problem>

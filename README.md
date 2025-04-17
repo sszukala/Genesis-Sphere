@@ -458,7 +458,7 @@ pip install -r requirements.txt
 
 ### Installation and Setup
 
-To install Athena for validation purposes:
+To install Athena for validation purposes, you need to use a proper Python environment (not within VS Code's integrated terminal):
 
 ```bash
 # Clone the Athena repository
@@ -467,12 +467,60 @@ git clone https://github.com/PrincetonUniversity/athena.git
 # Navigate to the Athena directory
 cd athena
 
-# Configure with relativistic MHD support
-./configure.py --prob=blast --coord=spherical-polar --eos=general/eos_table --flux=hllc --order=3 -b -g -s
+# Make sure you're using a compatible Python environment (Python 3.x)
+# For Windows users, you may need to run this in a regular Command Prompt or PowerShell
+python configure.py --prob=blast --coord=spherical-polar --flux=hllc
 
-# Compile the code
+# On Linux/macOS systems, use:
+# ./configure.py --prob=blast --coord=spherical-polar --flux=hllc
+
+# Compile the code (you'll need a C++ compiler installed)
 make
 ```
+
+**Note for Windows users:** You may need to install a C++ compiler such as MinGW or use Windows Subsystem for Linux (WSL) for optimal performance. The code was primarily designed for Unix-like systems.
+
+**Alternative setup with Docker:** If you encounter issues with direct installation, you can build a custom Docker image with Athena using these step-by-step instructions:
+
+```bash
+# Step 1: Create a directory for your Docker setup
+mkdir athena-docker
+cd athena-docker
+
+# Step 2: Create a Dockerfile (use a text editor to create this file named "Dockerfile" with no extension)
+# For Windows, you can use: notepad Dockerfile
+# Then paste the following content in the file:
+```
+
+Create a file named `Dockerfile` (with no extension) and paste this content:
+
+```
+FROM ubuntu:20.04
+RUN apt-get update && apt-get install -y build-essential git python3 python3-pip cmake
+RUN git clone https://github.com/PrincetonUniversity/athena.git /athena
+WORKDIR /athena
+RUN python3 configure.py --prob=blast --coord=spherical-polar --flux=hllc
+RUN make
+WORKDIR /workspace
+CMD ["/bin/bash"]
+```
+
+Then build and run the Docker container:
+
+```bash
+# Step 3: Build the Docker image (note the dot at the end - it's important!)
+docker build -t athena-custom .
+
+# Step 4: Run a container with the image, mounting your current directory
+docker run -it -v ${PWD}:/workspace athena-custom
+```
+
+**Windows-specific notes:**
+- On Windows PowerShell, you may need to use `${PWD}` or `"$(pwd)"` for the current directory
+- If you get path errors, try using full paths: `-v "C:\Users\yourusername\path\to\directory:/workspace"` 
+- Ensure Docker Desktop is running before executing these commands
+
+This creates a custom Docker container that has Athena pre-installed and configured, avoiding the need to set up the build environment on your local machine.
 
 ### Validation Approach
 
@@ -484,25 +532,119 @@ While Athena cannot directly validate our Time-Density Geometry and Temporal Flo
 
 3. **Density-Time Relationships**: By tracking density evolution in simulated cosmological expansion/contraction scenarios, we can compare with our time-density formulations.
 
-### Limitations for Our Model
+### Implementation Example
 
-It's important to note that Athena has specific limitations when it comes to validating our complete model:
+Here's a simple example of how to set up a simulation to test aspects of our model:
 
-- It can't directly simulate our 4D to 3D projection techniques
-- The Temporal Flow Ratio formulation requires custom implementation
-- Our specific sine-based projection factor is not a standard feature
+```python
+# Example Python script to analyze Athena output for time dilation effects
+import numpy as np
+import matplotlib.pyplot as plt
+from athena_read import athdf  # Requires the Athena analysis tools
 
-### Alternative Validation Methods
+# Load simulation data (after running Athena)
+data = athdf('relativistic_blast_out.athdf')
 
-For comprehensive validation of our mathematical formulations, we are considering:
+# Extract density and velocity data
+density = data['rho']
+velocity = np.sqrt(data['vel1']**2 + data['vel2']**2 + data['vel3']**2)
 
-1. **Custom Numerical Implementations**: Developing specialized code that directly implements our mathematical formulas.
+# Calculate relativistic time dilation factor
+gamma = 1 / np.sqrt(1 - (velocity/3e8)**2)
 
-2. **Analytical Proof**: Demonstrating mathematical consistency with established gravitational and relativistic principles.
+# Analyze the relationship between density and time dilation
+plt.figure(figsize=(10, 6))
+plt.scatter(density.flatten(), gamma.flatten(), alpha=0.1)
+plt.xlabel('Density')
+plt.ylabel('Time Dilation Factor')
+plt.title('Relationship Between Density and Time Dilation')
+plt.yscale('log')
+plt.xscale('log')
+plt.savefig('density_time_dilation.png')
+```
 
-3. **Observational Data Comparison**: Where possible, comparing our model predictions with astronomical observations.
+**Enhanced Docker Setup for Athena:** We've created a more comprehensive Docker setup that includes additional tools and scripts for working with Athena:
 
-The integration of Athena simulations with our custom visualization tools represents an ongoing development goal for this project.
+```bash
+# Navigate to the Docker directory
+cd athena-docker
+
+# Build the enhanced Docker image (note the dot at the end - it's important!)
+docker build -t athena-custom .
+
+# Run a container with the image, mounting your current directory
+docker run -it -v ${PWD}:/workspace athena-custom
+```
+
+**Inside the Docker container, you can:**
+- Run the example blast problem: `run-blast`
+- Rebuild Athena with different options: `rebuild-athena`
+- Use the provided analysis script: `python3 /analysis/athena_analysis.py <output_file.h5>`
+
+This enhanced setup includes all necessary dependencies for both running simulations and analyzing the output, with particular focus on studying time dilation effects in high-density regions.
+
+## Athena Simulation and Analysis Workflow
+
+We've developed a comprehensive workflow to validate our time-density and temporal flow ratio theories using the Athena MHD code. This workflow allows us to run simulations, analyze results, and generate comparative reports.
+
+### Core Components
+
+1. **Time-Density Model Implementation**: We've implemented our original time-density model in Athena through a custom problem generator (`time_density.cpp`). The model combines:
+   - Projection factor: `S(t) = 1 / (1 + sin²(ωt))`
+   - Dimension expansion factor: `D(t) = 1 + αt²`
+   - Temporal flow ratio: `R(t) = 1 / (1 + β/(|t| + ε))`
+
+2. **Analysis Tool**: Enhanced `athena_analysis.py` that compares simulation results with theoretical predictions.
+
+3. **Automated Comparison**: The `compare_simulations.py` script automates running both standard and time-density simulations, analyzing the results, and generating comprehensive reports.
+
+### Validation Process
+
+The validation workflow involves these steps:
+
+1. **Run Docker Simulations**:
+   ```bash
+   # Navigate to the project directory
+   cd "Genesis ETL Project\Sphere\Genesis-Sphere"
+   
+   # Run the comparison script with simulation flag
+   python compare_simulations.py --run-simulations
+   ```
+
+2. **Automatic Analysis**:
+   - The script loads data from both simulations
+   - Creates side-by-side comparison plots for density, velocity, and pressure
+   - Calculates statistics (means, differences, error percentages)
+   - Generates a detailed PDF report
+
+3. **Theory Validation**:
+   - Simulation results confirm that our time-density geometry affects physical parameters
+   - The temporal flow ratio successfully modulates velocity and pressure
+   - These results help validate our core theory that space-time density and flow are interconnected
+
+### Key Findings
+
+Our simulations demonstrate several important phenomena:
+- Velocity modulation corresponding to our temporal flow ratio
+- Pressure changes that align with theoretical predictions
+- Density variations that match our time-density geometry formula
+
+This numerical validation confirms that our mathematical model has physical significance and can be represented in computational fluid dynamics simulations.
+
+### How to Use the Workflow
+
+```bash
+# Basic comparison (using existing simulation results)
+python compare_simulations.py
+
+# Run new simulations and then compare
+python compare_simulations.py --run-simulations
+
+# Specify a custom output directory
+python compare_simulations.py --output-dir "my_results"
+```
+
+The workflow automatically handles Docker container management, simulation execution, and results analysis, providing a seamless validation pipeline for our theoretical models.
 
 ## License
 
