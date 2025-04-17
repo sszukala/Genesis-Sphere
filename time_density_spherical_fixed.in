@@ -1,0 +1,52 @@
+<comment>
+Time-Density Geometry model with proper spherical-polar coordinates 
+Using reflecting boundary conditions which should be valid for this Athena build
+</comment>
+
+<job>
+  problem_id = time_density
+  coord      = spherical_polar
+  eos        = adiabatic
+</job>
+
+<mesh>
+  nx1 = 64        # Radial zones
+  x1min = 0.1     # Inner radius (avoid r=0 singularity)
+  x1max = 2.0     # Outer radius
+  
+  nx2 = 64                 # Theta zones
+  x2min = 0.0              # Must be >= 0 in spherical
+  x2max = 3.14159265359    # Must be <= π in spherical
+  
+  nx3 = 1                  # Phi zones (1 for 2D)
+  x3min = 0.0
+  x3max = 0.01
+  
+  # Use reflecting boundary conditions instead of periodic
+  ix1_bc = reflecting
+  ox1_bc = reflecting
+  ix2_bc = reflecting
+  ox2_bc = reflecting
+  ix3_bc = reflecting
+  ox3_bc = reflecting
+</mesh>
+
+<time>
+  cfl_number = 0.3
+  tlim = 2.0
+  integrator = vl2
+  xorder = 2
+  ncycle_out = 1
+</time>
+
+<hydro>
+  gamma = 1.666667
+</hydro>
+
+<problem>
+  alpha = 0.02    # dimension expansion parameter
+  omega = 2.0     # projection factor parameter
+  beta = 0.5      # temporal drag coefficient
+  epsilon = 0.001 # singularity avoidance parameter
+  pressure = 1.0  # initial pressure
+</problem>

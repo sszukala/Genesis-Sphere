@@ -151,6 +151,9 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: python fixed_analysis.py <athena_output_file> [output_plot.png] [alpha] [omega] [beta] [epsilon]")
         print("Example: python fixed_analysis.py time_density_test.out1.00000 analysis.png 0.02 2.0 0.5 0.001")
+        print("\nValid Athena boundary conditions for spherical_polar coordinates:")
+        print("  - 'reflecting' (not 'periodic' or 'outflow')")
+        print("  - 'user' (for custom boundary conditions)")
         return
     
     input_file = sys.argv[1]
