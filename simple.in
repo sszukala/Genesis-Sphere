@@ -1,9 +1,9 @@
 <comment>
-Simple cartesian simulation with our time-density model
+Simple cartesian simulation with time-density model - using minimal boundary settings
 </comment>
 
 <job>
-  problem_id = time_density  # Using our custom time_density problem
+  problem_id = time_density
   coord      = cartesian
   eos        = adiabatic
 </job>
@@ -21,27 +21,22 @@ Simple cartesian simulation with our time-density model
   x3min = -0.1
   x3max = 0.1
   
-  # Changed to periodic boundary conditions
-  ix1_bc = periodic
-  ox1_bc = periodic
-  ix2_bc = periodic
-  ox2_bc = periodic
-  ix3_bc = periodic
-  ox3_bc = periodic
+  # Remove all boundary conditions - using default values
+  # This sometimes works if boundary condition handling is problematic
 </mesh>
 
 <time>
   cfl_number = 0.3
-  tlim = 1.0        # Time limit = 1.0
+  tlim = 1.0
   integrator = vl2
   xorder = 2
   ncycle_out = 1
 </time>
 
 <output1>
-  file_type  = vtk      # VTK output format
-  variable   = prim     # write primitive variables
-  dt         = 0.1      # time increment between outputs
+  file_type  = vtk
+  variable   = prim
+  dt         = 0.1
 </output1>
 
 <hydro>
@@ -49,9 +44,9 @@ Simple cartesian simulation with our time-density model
 </hydro>
 
 <problem>
-  alpha = 0.02    # dimension expansion parameter
-  omega = 2.0     # projection factor parameter
-  beta = 0.5      # temporal drag coefficient
-  epsilon = 0.001 # singularity avoidance parameter
-  pressure = 1.0  # initial pressure
+  alpha = 0.02
+  omega = 2.0
+  beta = 0.5
+  epsilon = 0.001
+  pressure = 1.0
 </problem>

@@ -1,5 +1,5 @@
 <comment>
-Time-Density Geometry model with cartesian coordinates - simplified version
+Time-Density Geometry model with cartesian coordinates - using minimal settings
 </comment>
 
 <job>
@@ -21,18 +21,13 @@ Time-Density Geometry model with cartesian coordinates - simplified version
   x3min = -0.1
   x3max = 0.1
   
-  # Changed to periodic boundary conditions
-  ix1_bc = periodic
-  ox1_bc = periodic
-  ix2_bc = periodic
-  ox2_bc = periodic
-  ix3_bc = periodic
-  ox3_bc = periodic
+  # Remove all boundary condition specifications
+  # Let Athena use its built-in defaults
 </mesh>
 
 <time>
   cfl_number = 0.3
-  tlim = 1.0        # Set to 1.0 to match your previous run
+  tlim = 1.0
   integrator = vl2
   xorder = 2
   ncycle_out = 1
