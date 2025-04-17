@@ -312,6 +312,8 @@ def export_data_csv(standard_data, time_density_data, stats):
 
 def main():
     """Main function to run the simulation comparison workflow"""
+    global OUTPUT_DIR  # Move the global declaration to the beginning of the function
+    
     parser = argparse.ArgumentParser(description='Automated simulation comparison tool')
     parser.add_argument('--config', type=str, default=CONFIG_FILE,
                         help=f'Configuration file (default: {CONFIG_FILE})')
@@ -321,8 +323,7 @@ def main():
                         help=f'Output directory (default: {OUTPUT_DIR})')
     args = parser.parse_args()
     
-    global OUTPUT_DIR
-    OUTPUT_DIR = args.output_dir
+    OUTPUT_DIR = args.output_dir  # Now we can assign to it after declaration
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
     # Load configuration
