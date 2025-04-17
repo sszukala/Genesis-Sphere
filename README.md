@@ -633,6 +633,36 @@ This numerical validation confirms that our mathematical model has physical sign
 
 ### How to Use the Workflow
 
+#### Prerequisites
+
+Before running the simulation comparison workflow, ensure Docker is properly set up:
+
+```bash
+# Navigate to the Docker directory
+cd athena-docker
+
+# Build the custom Athena Docker image
+docker build -t athena-custom .
+
+# Verify the image was created
+docker images
+```
+
+#### Windows-Specific Docker Setup
+
+```bash
+# For Windows PowerShell, use this syntax for paths
+docker run -it -v ${PWD}:/workspace athena-custom
+
+# For Command Prompt, use this syntax 
+docker run -it -v %cd%:/workspace athena-custom
+
+# If you encounter path issues, use absolute paths
+docker run -it -v "C:\Users\sszuk\OneDrive\Desktop\Genesis ETL Project\Sphere\Genesis-Sphere:/workspace" athena-custom
+```
+
+#### Running the Simulation Workflow
+
 ```bash
 # Basic comparison (using existing simulation results)
 python compare_simulations.py
@@ -642,6 +672,9 @@ python compare_simulations.py --run-simulations
 
 # Specify a custom output directory
 python compare_simulations.py --output-dir "my_results"
+
+# Run with a specific configuration file
+python compare_simulations.py --config custom_config.json
 ```
 
 The workflow automatically handles Docker container management, simulation execution, and results analysis, providing a seamless validation pipeline for our theoretical models.
