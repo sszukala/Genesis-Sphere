@@ -1,6 +1,5 @@
 <comment>
-Time-Density Geometry model with cartesian coordinates
-(Run this after rebuilding Athena with cartesian coordinates)
+Time-Density Geometry model with cartesian coordinates - simplified version
 </comment>
 
 <job>
@@ -22,13 +21,13 @@ Time-Density Geometry model with cartesian coordinates
   x3min = -0.1
   x3max = 0.1
   
-  # Boundary conditions (try both options)
-  ix1_bc = user
-  ox1_bc = user
-  ix2_bc = user
-  ox2_bc = user
-  ix3_bc = user
-  ox3_bc = user
+  # Try outflow boundary conditions
+  ix1_bc = outflow
+  ox1_bc = outflow
+  ix2_bc = outflow
+  ox2_bc = outflow
+  ix3_bc = outflow
+  ox3_bc = outflow
 </mesh>
 
 <time>
