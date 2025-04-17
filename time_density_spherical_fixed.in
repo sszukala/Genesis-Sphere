@@ -14,15 +14,21 @@ Using minimal settings to ensure compatibility
   x1min = 0.1     # Inner radius (avoid r=0 singularity)
   x1max = 2.0     # Outer radius
   
-  nx2 = 64                 # Theta zones
-  x2min = 0.0              # Must be >= 0 in spherical
-  x2max = 3.14159265359    # Must be <= π in spherical
+  nx2 = 64                                   # Theta zones
+  x2min = 0.0                                # Must be >= 0 in spherical
+  x2max = 3.1415926535897931                 # Must be EXACTLY π with this precision
   
   nx3 = 1                  # Phi zones (1 for 2D)
   x3min = 0.0
   x3max = 0.01
   
-  # No boundary conditions specified - let Athena use defaults
+  # Specific boundary conditions for spherical coordinates
+  ix1_bc = outflow  # Inner radial boundary
+  ox1_bc = outflow  # Outer radial boundary
+  ix2_bc = polar    # Theta minimum (pole)
+  ox2_bc = polar    # Theta maximum (pole) 
+  ix3_bc = periodic # Phi minimum
+  ox3_bc = periodic # Phi maximum
 </mesh>
 
 <time>
@@ -38,7 +44,7 @@ Using minimal settings to ensure compatibility
   variable   = prim       # write primitive variables
   dt         = 0.1        # time increment between outputs
   id         = fixed      # specify an ID for the output
-  out_dir    = /workspace # write files to /workspace (mounted volume)
+  out_dir    = /workspace/time_density_output  # Create a specific subfolder
 </output1>
 
 <hydro>
