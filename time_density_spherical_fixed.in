@@ -1,6 +1,6 @@
 <comment>
 Time-Density Geometry model with proper spherical-polar coordinates 
-Using user boundary conditions which should be valid for this Athena build
+Using minimal settings to ensure compatibility
 </comment>
 
 <job>
@@ -22,13 +22,7 @@ Using user boundary conditions which should be valid for this Athena build
   x3min = 0.0
   x3max = 0.01
   
-  # Try "dirichlet" boundary conditions instead
-  ix1_bc = dirichlet
-  ox1_bc = dirichlet
-  ix2_bc = dirichlet
-  ox2_bc = dirichlet
-  ix3_bc = dirichlet
-  ox3_bc = dirichlet
+  # No boundary conditions specified - let Athena use defaults
 </mesh>
 
 <time>

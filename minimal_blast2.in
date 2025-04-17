@@ -1,0 +1,45 @@
+<comment>
+Very minimal blast problem - with NO boundary conditions specified
+</comment>
+
+<job>
+  problem_id = blast
+  coord      = cartesian
+  eos        = adiabatic
+</job>
+
+<mesh>
+  nx1 = 32
+  x1min = 0.0
+  x1max = 1.0
+  
+  nx2 = 32
+  x2min = 0.0
+  x2max = 1.0
+  
+  nx3 = 1
+  x3min = 0.0
+  x3max = 1.0
+  
+  # No boundary conditions specified - let Athena use its defaults
+</mesh>
+
+<time>
+  tlim = 0.1
+  ncycle_out = 1
+  cfl_number = 0.3
+</time>
+
+<hydro>
+  gamma = 1.4
+</hydro>
+
+<problem>
+  radius = 0.1
+  center_x1 = 0.5
+  center_x2 = 0.5
+  ambient_density = 1.0
+  blast_density = 10.0
+  ambient_pressure = 0.1
+  blast_pressure = 10.0
+</problem>
