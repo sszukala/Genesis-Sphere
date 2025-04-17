@@ -21,13 +21,13 @@ Time-Density Geometry model with cartesian coordinates - simplified version
   x3min = -0.1
   x3max = 0.1
   
-  # Use reflecting instead of outflow (outflow is invalid)
-  ix1_bc = reflecting
-  ox1_bc = reflecting
-  ix2_bc = reflecting
-  ox2_bc = reflecting
-  ix3_bc = reflecting
-  ox3_bc = reflecting
+  # Changed to periodic boundary conditions
+  ix1_bc = periodic
+  ox1_bc = periodic
+  ix2_bc = periodic
+  ox2_bc = periodic
+  ix3_bc = periodic
+  ox3_bc = periodic
 </mesh>
 
 <time>
