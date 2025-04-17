@@ -1,0 +1,62 @@
+<comment>
+Basic blast problem with minimal settings
+</comment>
+
+<job>
+  problem_id = blast
+  coord      = spherical_polar
+  eos        = adiabatic
+</job>
+
+<mesh>
+  nx1 = 64
+  x1min = 0.1
+  x1max = 2.0
+  
+  nx2 = 64
+  x2min = 0.0
+  x2max = 3.1415926535897931
+  
+  nx3 = 1
+  x3min = 0.0
+  x3max = 0.01
+  
+  ix1_bc = outflow
+  ox1_bc = outflow
+  ix2_bc = polar_wedge
+  ox2_bc = polar_wedge
+  ix3_bc = periodic
+  ox3_bc = periodic
+</mesh>
+
+<time>
+  cfl_number = 0.3
+  tlim = 2.0
+  integrator = rk2
+  ncycle_out = 1
+</time>
+
+<output1>
+  file_type  = vtk
+  variable   = prim
+  dt         = 0.1
+  id         = basic_blast
+</output1>
+
+<hydro>
+  gamma = 1.666667
+  xorder = 2
+  reconstruction = plm
+</hydro>
+
+<problem>
+  radius = 0.5
+  center_x1 = 1.0
+  center_x2 = 1.57
+  
+  # Only standard blast parameters
+  ambient_density = 1.0
+  blast_density = 10.0
+  ambient_pressure = 1.0
+  blast_pressure = 10.0
+</problem>

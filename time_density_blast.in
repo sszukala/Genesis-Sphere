@@ -1,0 +1,74 @@
+<comment>
+Time-Density model using blast problem type
+Using minimal settings to ensure compatibility
+</comment>
+
+<job>
+  problem_id = blast         # Using blast problem (definitely supported)
+  coord      = spherical_polar
+  eos        = adiabatic
+</job>
+
+<mesh>
+  nx1 = 64        # Radial zones
+  x1min = 0.1     # Inner radius (avoid r=0 singularity)
+  x1max = 2.0     # Outer radius
+  
+  nx2 = 64                                   # Theta zones
+  x2min = 0.0                                # Must be >= 0 in spherical
+  x2max = 3.1415926535897931                 # Must be exactly π
+  
+  nx3 = 1                  # Phi zones (1 for 2D)
+  x3min = 0.0
+  x3max = 0.01
+  
+  # Specific boundary conditions for spherical coordinates
+  ix1_bc = outflow      # Inner radial boundary
+  ox1_bc = outflow      # Outer radial boundary
+  ix2_bc = polar_wedge  # Theta minimum (pole)
+  ox2_bc = polar_wedge  # Theta maximum (pole)
+  ix3_bc = periodic     # Phi minimum
+  ox3_bc = periodic     # Phi maximum
+</mesh>
+
+<time>
+  cfl_number = 0.3
+  tlim = 2.0
+  integrator = rk2       # Using rk2 instead of vl2
+  ncycle_out = 1
+</time>
+
+<output1>
+  file_type  = vtk        # VTK output format
+  variable   = prim       # write primitive variables
+  dt         = 0.1        # time increment between outputs
+  id         = blast_td   # specify an ID for the output
+</output1>
+
+<hydro>
+  gamma = 1.666667
+  xorder = 2              # Reconstruction order
+  reconstruction = plm    # Piecewise Linear Method
+</hydro>
+
+<problem>
+  # Standard blast parameters (required)
+  radius = 0.5             # Radius of the blast
+  center_x1 = 1.0          # Center of the blast in r
+  center_x2 = 1.57         # Center in theta (π/2)
+  
+  # Required blast parameters
+  prat = 1.0               # Pressure ratio (required parameter that was missing)
+  
+  # Our time-density parameters (will be ignored by blast problem but kept for reference)
+  alpha = 0.02             # dimension expansion parameter
+  omega = 2.0              # projection factor parameter
+  beta = 0.5               # temporal drag coefficient
+  epsilon = 0.001          # singularity avoidance parameter
+  
+  # Essential blast parameters
+  ambient_density = 1.0    # Density outside blast
+  blast_density = 10.0     # Density inside blast (higher for visibility)
+  ambient_pressure = 1.0   # Pressure outside blast
+  blast_pressure = 10.0    # Pressure inside blast (higher for visibility)
+</problem>
