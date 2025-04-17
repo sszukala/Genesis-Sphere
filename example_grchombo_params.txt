@@ -1,0 +1,40 @@
+# Example parameter file for GRChombo
+# This file defines a simple scalar field simulation
+
+# Grid parameters
+N1 = 64                   # Number of grid points in x direction
+N2 = 64                   # Number of grid points in y direction
+N3 = 64                   # Number of grid points in z direction
+L = 64.0                  # Physical length of the grid
+center = 32.0 32.0 32.0   # Physical center of the grid
+
+# Time stepping parameters
+dt = 0.25                 # Time step
+stop_time = 100.0         # Time to stop the simulation
+checkpoint_interval = 10  # Steps between checkpoint files
+plot_interval = 5         # Steps between plot files
+
+# Adaptive Mesh Refinement parameters
+max_level = 4             # Maximum level of refinement
+regrid_interval = 10      # Steps between regridding
+tag_buffer_size = 3       # Size of buffer zone
+refine_threshold = 0.03   # Refinement threshold
+block_factor = 8          # Block size
+max_grid_size = 32        # Maximum grid size
+fill_ratio = 0.7          # Fill ratio
+num_ghosts = 3            # Number of ghost cells
+
+# Scalar field parameters
+G_Newton = 1.0            # Newton's gravitational constant
+phi_amplitude = 0.4       # Amplitude of the scalar field
+phi_wavelength = 1.0      # Wavelength of the scalar field
+phi_background = 0.1      # Background value of the scalar field
+ 
+# Additional parameters
+nan_check = 1             # Check for NANs
+sigma = 1.0               # Sigma parameter for dissipation
+verbosity = 1             # Verbosity level
+time_density_alpha = 0.02 # Time-density alpha parameter
+time_density_omega = 2.0  # Time-density omega parameter
+temporal_flow_beta = 0.5  # Temporal flow beta parameter
+temporal_flow_epsilon = 0.001 # Temporal flow epsilon parameter

@@ -779,6 +779,155 @@ We're now exploring [GRChombo](https://www.grchombo.org/) as our primary validat
 
 5. **BSSN Formalism Implementation**: The Baumgarte-Shapiro-Shibata-Nakamura formalism in GRChombo aligns with our mathematical approach to representing time curvature.
 
+#### Comprehensive GRChombo Installation Guide
+
+##### Prerequisites Installation
+
+GRChombo requires several dependencies. Here's how to install them on Ubuntu/Debian-based systems:
+
+```bash
+# Update package lists
+sudo apt update
+
+# Install required system packages
+sudo apt install -y build-essential g++ gfortran cmake git 
+sudo apt install -y libhdf5-serial-dev libfftw3-dev 
+sudo apt install -y liblapack-dev libblas-dev 
+sudo apt install -y libopenmpi-dev openmpi-bin
+sudo apt install -y python3 python3-pip
+
+# Install required Python packages
+pip3 install numpy matplotlib scipy h5py mpi4py
+```
+
+For Windows users, we recommend using Windows Subsystem for Linux (WSL2) with Ubuntu, or using our prepared Docker container.
+
+##### GRChombo Setup and Installation
+
+1. **Create a workspace directory and clone repositories**:
+
+```bash
+# Create and enter workspace directory
+mkdir ~/grchombo && cd ~/grchombo
+
+# Clone required repositories
+git clone https://github.com/GRChombo/Chombo.git
+git clone https://github.com/GRChombo/GRChombo.git
+
+# Set environment variables
+export GRCHOMBO_SOURCE=~/grchombo/GRChombo
+export CHOMBO_HOME=~/grchombo/Chombo
+```
+
+2. **Configure and build Chombo**:
+
+```bash
+# Enter the Chombo directory
+cd ~/grchombo/Chombo
+
+# Create Make.defs.local configuration 
+cat > Make.defs.local << EOF
+DIM              = 3
+DEBUG            = FALSE
+OPT              = TRUE
+PRECISION        = DOUBLE
+CXX              = mpicxx -std=c++14
+FC               = mpif90
+MPI              = TRUE
+USE_HDF          = TRUE
+HDFINCFLAGS      = -I/usr/include/hdf5/serial
+HDFLIBFLAGS      = -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5 -lz
+HDFMPIINCFLAGS   = -I/usr/include/hdf5/serial
+HDFMPILIBFLAGS   = -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lhdf5 -lz
+EOF
+
+# Build Chombo library
+make lib
+```
+
+3. **Configure GRChombo environment**:
+
+```bash
+# Create configuration file for GRChombo
+cd ~/grchombo
+cat > .env << EOF
+export GRCHOMBO_SOURCE=~/grchombo/GRChombo
+export CHOMBO_HOME=~/grchombo/Chombo
+EOF
+
+# Source the configuration
+source .env
+```
+
+4. **Build a GRChombo example**:
+
+```bash
+# Navigate to the ScalarField example
+cd ~/grchombo/GRChombo/Examples/ScalarField
+
+# Copy and edit the example parameter file
+cp params.txt my_params.txt
+
+# Build the example
+make
+
+# Run a simple test (adjust N based on available CPU cores)
+mpirun -N 4 ./ScalarField3d my_params.txt
+```
+
+##### Setting Up Your GRChombo Project
+
+To use GRChombo for validating our Time-Density models:
+
+1. **Create a project directory**:
+
+```bash
+mkdir -p ~/grchombo/TimeDensity
+cd ~/grchombo/TimeDensity
+```
+
+2. **Initialize with our custom files**:
+
+```bash
+# Copy base files from ScalarField example
+cp -r ~/grchombo/GRChombo/Examples/ScalarField/* .
+
+# Copy our custom source files
+cp ~/Genesis-Sphere/grchombo/TimeDensityLevel.hpp .
+cp ~/Genesis-Sphere/grchombo/TimeDensityProblem.hpp .
+```
+
+3. **Build and run the validation**:
+
+```bash
+# Update Make.defs to use our custom problem
+# Edit the Main.cpp to use our custom classes
+
+# Build the executable
+make clean
+make -j4
+
+# Run the simulation
+mpirun -N 4 ./TimeDensity3d params.txt
+```
+
+#### Windows/Docker Installation Alternative
+
+For Windows users or those facing compilation issues, we provide a Docker-based installation:
+
+```bash
+# Pull our pre-built GRChombo Docker image
+docker pull sszukala/grchombo:latest
+
+# Run a container with the image
+docker run -it --rm -v ${PWD}:/workspace sszukala/grchombo:latest
+
+# Inside the container, you can directly run the examples
+cd /GRChombo/Examples/ScalarField
+make
+mpirun -N 2 ./ScalarField3d params.txt
+```
+
 #### Validation Plan Using GRChombo
 
 We're implementing a staged validation approach:
@@ -790,37 +939,6 @@ We're implementing a staged validation approach:
 3. **Singularity Approach Behavior**: Most importantly, examining the behavior of time near singularities to validate our prediction that time effectively "freezes" as ρ(t) approaches infinity.
 
 4. **Comparative Analysis**: Creating quantitative comparisons between analytical predictions from our formulas and GRChombo's numerical solutions.
-
-#### Getting Started with GRChombo (Development Plan)
-
-To run GRChombo validations:
-
-1. **Prerequisites**: 
-   - C++11 compatible compiler
-   - MPI
-   - HDF5
-   - Chombo library dependencies
-
-2. **Installation**:
-   ```bash
-   # Clone GRChombo
-   git clone https://github.com/GRChombo/GRChombo.git
-   
-   # Set environment variables (customize for your system)
-   export WORK=/path/to/work/directory
-   export GRCHOMBO_SOURCE=$WORK/GRChombo
-   export PATH=$WORK/bin:$PATH
-   
-   # Build GRChombo (basic example)
-   cd $GRCHOMBO_SOURCE/Examples/BinaryBlackHole
-   make
-   ```
-
-3. **Initial Simulations**: We'll begin with the `ScalarField` example as it maps well to our density field concept, followed by black hole simulations.
-
-4. **Custom Model Implementation**: Our team is currently developing a custom simulation module to directly model our Time-Density and Temporal Flow Ratio formulations.
-
-We'll provide more detailed documentation on our GRChombo validation approach in upcoming updates. This transition represents a significant advancement in our ability to rigorously validate the mathematical foundations of our Time-Density Geometry model.
 
 ## Next Steps in Development
 
