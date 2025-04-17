@@ -49,6 +49,7 @@ Using minimal settings to ensure compatibility
 
 <hydro>
   gamma = 1.666667
+  reconstruct = plm   # Add a reconstruction method (Piece-wise Linear Method)
 </hydro>
 
 <problem>
