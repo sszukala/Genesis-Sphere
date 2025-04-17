@@ -1,28 +1,28 @@
 <comment>
-Time-Density Geometry model with proper spherical-polar coordinates 
-Using user boundary conditions which should be valid for this Athena build
+Time-Density Geometry model with cartesian coordinates
+(Run this after rebuilding Athena with cartesian coordinates)
 </comment>
 
 <job>
   problem_id = time_density
-  coord      = spherical_polar
+  coord      = cartesian
   eos        = adiabatic
 </job>
 
 <mesh>
-  nx1 = 64        # Radial zones
-  x1min = 0.1     # Inner radius (avoid r=0 singularity)
-  x1max = 2.0     # Outer radius
+  nx1 = 64
+  x1min = -1.0
+  x1max = 1.0
   
-  nx2 = 64                 # Theta zones
-  x2min = 0.0              # Must be >= 0 in spherical
-  x2max = 3.14159265359    # Must be <= π in spherical
+  nx2 = 64
+  x2min = -1.0
+  x2max = 1.0
   
-  nx3 = 1                  # Phi zones (1 for 2D)
-  x3min = 0.0
-  x3max = 0.01
+  nx3 = 1
+  x3min = -0.1
+  x3max = 0.1
   
-  # Try using 'user' boundary conditions instead
+  # Boundary conditions (try both options)
   ix1_bc = user
   ox1_bc = user
   ix2_bc = user
