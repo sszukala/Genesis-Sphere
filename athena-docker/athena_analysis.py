@@ -10,6 +10,9 @@ import matplotlib.pyplot as plt
 import h5py
 import sys
 import os
+import vtk
+from vtk.util import numpy_support
+import os.path
 
 def read_athena_data(filename):
     """Read data from an Athena HDF5 output file"""
@@ -34,6 +37,139 @@ def read_athena_data(filename):
     except Exception as e:
         print(f"Error reading file {filename}: {e}")
         return None, None
+
+def read_athena_vtk(filename):
+    """Read data from an Athena VTK output file"""
+    try:
+        print(f"Loading VTK data from {filename}")
+        
+        # Determine appropriate reader based on file extension
+        _, ext = os.path.splitext(filename)
+        
+        if ext.lower() == '.vtk':
+            # Legacy VTK format
+            if 'UNSTRUCTURED' in open(filename, 'r').readline():
+                reader = vtk.vtkUnstructuredGridReader()
+            else:
+                reader = vtk.vtkStructuredPointsReader()
+        elif ext.lower() == '.vtp':
+            reader = vtk.vtkXMLPolyDataReader()
+        elif ext.lower() == '.vtu':
+            reader = vtk.vtkXMLUnstructuredGridReader()
+        else:
+            reader = vtk.vtkStructuredPointsReader()  # Default to structured
+            
+        reader.SetFileName(filename)
+        reader.Update()
+        
+        # Get time value from file (if available)
+        time = 0.0
+        try:
+            field_data = reader.GetOutput().GetFieldData()
+            if field_data.GetArray("TIME"):
+                time = field_data.GetArray("TIME").GetValue(0)
+        except:
+            pass
+            
+        # Extract geometric data
+        points_vtk = reader.GetOutput().GetPoints().GetData()
+        points_np = numpy_support.vtk_to_numpy(points_vtk)
+        
+        # Create structured data dictionary
+        data = {}
+        
+        # Extract all available point data
+        point_data = reader.GetOutput().GetPointData()
+        num_arrays = point_data.GetNumberOfArrays()
+        
+        print(f"Found {num_arrays} data arrays in VTK file")
+        
+        for i in range(num_arrays):
+            array_name = point_data.GetArrayName(i)
+            array_vtk = point_data.GetArray(i)
+            array_np = numpy_support.vtk_to_numpy(array_vtk)
+            
+            # Check if this is vector data
+            num_components = array_vtk.GetNumberOfComponents()
+            if num_components > 1:
+                # Handle vector data
+                if array_name == "velocity" or array_name == "vel":
+                    # Split vector into components
+                    data['vel1'] = array_np[:, 0]
+                    data['vel2'] = array_np[:, 1] if num_components > 1 else np.zeros_like(array_np[:, 0])
+                    data['vel3'] = array_np[:, 2] if num_components > 2 else np.zeros_like(array_np[:, 0])
+                elif array_name == "B" or array_name == "Bcc" or array_name == "magnetic":
+                    # Magnetic field components
+                    data['B1'] = array_np[:, 0]
+                    data['B2'] = array_np[:, 1] if num_components > 1 else np.zeros_like(array_np[:, 0])
+                    data['B3'] = array_np[:, 2] if num_components > 2 else np.zeros_like(array_np[:, 0])
+                else:
+                    # Generic vector field
+                    for j in range(num_components):
+                        data[f"{array_name}{j+1}"] = array_np[:, j]
+            else:
+                # Handle scalar data
+                if array_name.lower() == "rho" or array_name.lower() == "density":
+                    data['rho'] = array_np
+                elif array_name.lower() == "press" or array_name.lower() == "pressure":
+                    data['press'] = array_np
+                else:
+                    data[array_name] = array_np
+        
+        # Add coordinate data
+        data['x'] = points_np[:, 0]
+        if points_np.shape[1] > 1:
+            data['y'] = points_np[:, 1]
+        if points_np.shape[1] > 2:
+            data['z'] = points_np[:, 2]
+        
+        print(f"Successfully read VTK file: {filename} (time = {time})")
+        return time, data
+    except Exception as e:
+        print(f"Error reading VTK file {filename}: {e}")
+        return None, None
+
+def read_athena_data_any_format(filename):
+    """Read data from an Athena output file, automatically detecting format"""
+    _, ext = os.path.splitext(filename)
+    
+    # Use appropriate reader based on file extension
+    if ext.lower() in ['.vtk', '.vtu', '.vtp']:
+        return read_athena_vtk(filename)
+    elif ext.lower() in ['.h5', '.hdf5', '.athdf']:
+        return read_athena_data(filename)
+    else:
+        # Try to read as text format
+        try:
+            time, data = None, None
+            # Load data as a NumPy array
+            data_array = np.loadtxt(filename)
+            
+            # Organize data into a dictionary
+            # Assuming columns are: x, y, z, time, rho, vel1, vel2, vel3, press
+            time = data_array[0, 3]  # Get time from first row
+            
+            data = {
+                'x': data_array[:, 0],
+                'y': data_array[:, 1],
+                'z': data_array[:, 2],
+                'rho': data_array[:, 4],
+                'vel1': data_array[:, 5],
+            }
+            
+            # Add additional columns if they exist
+            if data_array.shape[1] > 6:
+                data['vel2'] = data_array[:, 6]
+            if data_array.shape[1] > 7:
+                data['vel3'] = data_array[:, 7]
+            if data_array.shape[1] > 8:
+                data['press'] = data_array[:, 8]
+                
+            print(f"Successfully read text file: {filename} (time = {time})")
+            return time, data
+        except Exception as e:
+            print(f"Error reading file {filename}: {e}")
+            return None, None
 
 def analyze_relativistic_effects(data):
     """Calculate relativistic effects from simulation data"""
@@ -61,239 +197,156 @@ def analyze_relativistic_effects(data):
 
 def analyze_time_density_model(data, time, alpha=0.01, omega=1.0):
     """Analyze results from a time-density model simulation and compare with theory"""
-    if 'rho' not in data:/ (abs(t) + epsilon))
+    if 'rho' not in data:
         print("Density data not found")
-        return Nonensity_model(data, time, alpha=0.01, omega=1.0, beta=1.0, epsilon=0.01):
-    """Analyze results from a time-density model simulation and compare with theory"""
-    # Extract actual density from simulation
-    density_sim = data['rho']ot found")
         return None
+    
+    # Extract actual density from simulation
+    density_sim = data['rho']
+    
     # Calculate theoretical density based on your model
-    def time_density(t, a, w):rom simulation
+    def time_density(t, a, w):
         S_t = 1.0 / (1.0 + np.sin(w * t)**2)  # Projection factor
         D_t = 1.0 + a * t**2  # Dimension expansion factor
-        return S_t * D_tcal density based on your model
-    def time_density(t, a, w):
-    # Theoretical density at current time*2)  # Projection factor
-    density_theory = time_density(time, alpha, omega)actor
         return S_t * D_t
+    
+    # Theoretical density at current time
+    density_theory = time_density(time, alpha, omega)
+    
     # Calculate difference between simulation and theory
-    mean_density = np.mean(density_sim)me
+    mean_density = np.mean(density_sim)
     theory_error = abs(mean_density - density_theory) / density_theory * 100.0
     
-    results = { temporal flow ratio
-        'density_sim': density_sim,o(time, beta, epsilon)
+    results = {
+        'density_sim': density_sim,
         'density_theory': density_theory,
-        'mean_density': mean_density, velocity
+        'mean_density': mean_density,
         'theory_error': theory_error,
-        'time': time,y = None
+        'time': time,
         'alpha': alpha,
-        'omega': omegasure = np.mean(data['press']) * flow_ratio
-    }f 'vel1' in data:
-        vel_magnitude = np.sqrt(np.mean(data['vel1']**2))
-    return resultsin data:
-            vel_magnitude = np.sqrt(vel_magnitude**2 + np.mean(data['vel2']**2))
+        'omega': omega
+    }
+    
+    return results
+
 def plot_density_timedilation(rel_data, output_file=None):
     """Create a plot showing the relationship between density and time dilation"""
-    plt.figure(figsize=(10, 6))l_magnitude * flow_ratio
+    plt.figure(figsize=(10, 6))
     
-    # Flatten arrays for scatter plotmulation and theory
+    # Flatten arrays for scatter plot
     density_flat = rel_data['density'].flatten()
-    gamma_flat = rel_data['gamma'].flatten()y_theory) / density_theory * 100.0
+    gamma_flat = rel_data['gamma'].flatten()
     
     # Create scatter plot
     plt.scatter(density_flat, gamma_flat, alpha=0.1, s=1)
-        'density_theory': density_theory,
-    plt.xlabel('Density')ean_density,
+    plt.xlabel('Density')
     plt.ylabel('Time Dilation Factor (γ)')
     plt.title('Relationship Between Density and Time Dilation')
-    plt.xscale('log')a,
-    plt.yscale('log')a,
+    plt.xscale('log')
+    plt.yscale('log')
     plt.grid(True, alpha=0.3)
-        'epsilon': epsilon,
-    if output_file:': flow_ratio,
-        plt.savefig(output_file, dpi=300)ressure,
-        print(f"Plot saved to: {output_file}")ty
+    
+    if output_file:
+        plt.savefig(output_file, dpi=300)
+        print(f"Plot saved to: {output_file}")
     else:
         plt.show()
-    return results
+
 def plot_time_density_comparison(results, output_file=None):
     """Plot comparison between theoretical and simulated time-density"""
-    plt.figure(figsize=(12, 8)))e relationship between density and time dilation"""
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 8))
+    
     # Create a 2x2 grid for the top part
-    plt.subplot(2, 2, 1) scatter plot
-    # Plot density histogram from simulationen()
+    plt.subplot(2, 2, 1)
+    # Plot density histogram from simulation
     plt.hist(results['density_sim'].flatten(), bins=50, alpha=0.7)
     plt.axvline(results['density_theory'], color='r', linestyle='--', 
                 label=f'Theoretical density: {results["density_theory"]:.4f}')
     plt.axvline(results['mean_density'], color='g', linestyle='-',
                 label=f'Mean density: {results["mean_density"]:.4f}')
     plt.title(f'Time-Density Model Validation (t={results["time"]:.4f})')
-    plt.xlabel('Density')tion Factor (γ)')
-    plt.ylabel('Frequency') Between Density and Time Dilation')
-    plt.legend()log')
-    plt.yscale('log')
+    plt.xlabel('Density')
+    plt.ylabel('Frequency')
+    plt.legend()
+    
     # Plot the theoretical time-density function
     plt.subplot(2, 2, 2)
     t_values = np.linspace(0, max(5.0, results['time']*2), 1000)
-        plt.savefig(output_file, dpi=300)
-    def time_density(t, a, w): {output_file}")
+    def time_density(t, a, w):
         S_t = 1.0 / (1.0 + np.sin(w * t)**2) 
         D_t = 1.0 + a * t**2
         return S_t * D_t
-    plot_time_density_comparison(results, output_file=None):
     densities = [time_density(t, results['alpha'], results['omega']) for t in t_values]
     plt.plot(t_values, densities, 'b-')
     plt.axvline(results['time'], color='r', linestyle='--')
     plt.axhline(results['density_theory'], color='r', linestyle='--')
     plt.scatter([results['time']], [results['density_theory']], color='r', s=50)
-    plt.title('Time-Density Function')lation
-    plt.xlabel('Time')density_sim'].flatten(), bins=50, alpha=0.7)
-    plt.ylabel('Density')density_theory'], color='r', linestyle='--', 
-    plt.grid(True, alpha=0.3)etical density: {results["density_theory"]:.4f}')
-    plt.axvline(results['mean_density'], color='g', linestyle='-',
-    # Add simulation vs theory informationan_density"]:.4f}')
-    plt.subplot(2, 1, 2)sity Model Validation (t={results["time"]:.4f})')
-    plt.text(0.5, 0.5, ce(0.01, max(5.0, results['time']*2), 1000)')
-             f"Time-Density Model Analysis\n\n"ts['beta'], results['epsilon']) for t in t_range]
+    plt.title('Time-Density Function')
+    plt.xlabel('Time')
+    plt.ylabel('Density')
+    plt.grid(True, alpha=0.3)
+    
+    # Add simulation vs theory information
+    plt.subplot(2, 1, 2)
+    plt.text(0.5, 0.5, 
+             f"Time-Density Model Analysis\n\n"
              f"Simulation Time: {results['time']:.4f}\n"
              f"Theoretical Density: {results['density_theory']:.6f}\n"
              f"Mean Simulated Density: {results['mean_density']:.6f}\n"
-             f"Error: {results['theory_error']:.2f}%\n\n"], color='r', s=50)
-             f"Parameters:\n"Ratio Function') max(5.0, results['time']*2), 1000)
+             f"Error: {results['theory_error']:.2f}%\n\n"
+             f"Parameters:\n"
              f"Alpha (dimension expansion): {results['alpha']:.6f}\n"
              f"Omega (projection factor): {results['omega']:.6f}\n\n"
              f"This validates the Time-Density Geometry model from our research,\n"
              f"showing how the space-time density relates to our geometric model.",
              ha='center', va='center', fontsize=12)
-    plt.axis('off')2, 4)
-    x_labels = []densities = [time_density(t, results['alpha'], results['omega']) for t in t_values]
-    plt.tight_layout()ities, 'b-')
-    plt.axvline(results['time'], color='r', linestyle='--')
-    if output_file:ulated_pressure'] is not None:ults['density_theory'], color='r', linestyle='--')
-        plt.savefig(output_file, dpi=300)nsity_theory']], color='r', s=50)
+    plt.axis('off')
+    
+    plt.tight_layout()
+    if output_file:
+        plt.savefig(output_file, dpi=300)
         print(f"Time-density comparison plot saved to: {output_file}")
-    else:('Time')
-        plt.show()dulated_velocity'] is not None:nsity')
-        x_labels.append('Velocity')    plt.grid(True, alpha=0.3)
-def main():alues.append(results['modulated_velocity'])
+    else:
+        plt.show()
+
+def main():
     """Main function to process command line arguments"""
     if len(sys.argv) < 2:
-        print("Usage: python athena_analysis.py <athena_output_file.h5> [output_plot.png] [analysis_type] [param1] [param2] [param3] [param4]")
+        print("Usage: python athena_analysis.py <athena_output_file> [output_plot.png] [analysis_type] [param1] [param2] [param3] [param4]")
         print("Analysis types: 'relativistic' (default) or 'time-density'")
         print("For time-density: param1=alpha, param2=omega, param3=beta, param4=epsilon")
-        returnid(True, alpha=0.3)"Theoretical Density: {results['density_theory']:.6f}\n"
-    else:         f"Mean Simulated Density: {results['mean_density']:.6f}\n"
-    input_file = sys.argv[1]No pressure or velocity data available", ts['theory_error']:.2f}%\n\n"
+        print("Supported file formats: .vtk, .h5, .hdf5, .athdf, or text data files")
+        return
+    
+    input_file = sys.argv[1]
     output_file = sys.argv[2] if len(sys.argv) > 2 else None
-        plt.axis('off')         f"Alpha (dimension expansion): {results['alpha']:.6f}\n"
-    # Determine analysis typeega']:.6f}\n\n"
-    analysis_type = 'relativistic'  # Defaulteometry model from our research,\n"
-    if len(sys.argv) > 3: the space-time density relates to our geometric model.",
-        analysis_type = sys.argv[3]el Analysis with Temporal Flow\n\n"r', fontsize=12)
-                f"Simulation Time: {results['time']:.4f}\n"plt.axis('off')
-    # Read data f"Theoretical Density: {results['density_theory']:.6f}\n"
-    time, data = read_athena_data(input_file)sults['mean_density']:.6f}\n"
-    if data is None:nsity Error: {results['theory_error']:.2f}%\n\n"
-        return  f"Parameters:\n"file:
-                f"Alpha (dimension expansion): {results['alpha']:.6f}\n"    plt.savefig(output_file, dpi=300)
-    # Perform analysis based on typefactor): {results['omega']:.6f}\n"son plot saved to: {output_file}")
-    if analysis_type == 'time-density': {results['beta']:.6f}\n"
-        # Get parameters if providedty avoidance): {results['epsilon']:.6f}\n\n"
-        alpha = float(sys.argv[4]) if len(sys.argv) > 4 else 0.01}\n")
+    
+    # Determine analysis type
+    analysis_type = 'relativistic'  # Default
+    if len(sys.argv) > 3:
+        analysis_type = sys.argv[3]
+    
+    # Read data using the unified reader function
+    time, data = read_athena_data_any_format(input_file)
+    if data is None:
+        return
+    
+    # Perform analysis based on type
+    if analysis_type == 'time-density':
+        # Get parameters if provided
+        alpha = float(sys.argv[4]) if len(sys.argv) > 4 else 0.01
         omega = float(sys.argv[5]) if len(sys.argv) > 5 else 1.0
-        beta = float(sys.argv[6]) if len(sys.argv) > 6 else 1.0esults['modulated_pressure'] is not None:ain function to process command line arguments"""
+        beta = float(sys.argv[6]) if len(sys.argv) > 6 else 1.0
         epsilon = float(sys.argv[7]) if len(sys.argv) > 7 else 0.01
         
-        print(f"Performing time-density analysis (alpha={alpha}, omega={omega}, beta={beta}, epsilon={epsilon})...")elocity'] is not None:es: 'relativistic' (default) or 'time-density'")
-        results = analyze_time_density_model(data, time, alpha, omega, beta, epsilon)+= f"Modulated Velocity: {results['modulated_velocity']:.6f}\n" time-density: param1=alpha, param2=omega")
-        if results is None:rn
-            returnemporal Flow models from our research,\n" \
-                 f"showing how the space-time density and time flow relate to our geometric model."t_file = sys.argv[1]
-        plot_time_density_comparison(results, output_file) 2 else None
-        ='center', fontsize=11)
-        # Print statistics
-        print("\nTime-Density Model Statistics:")
-        print(f"Time: {results['time']:.6f}")
-        print(f"Theoretical density: {results['density_theory']:.6e}")
-        print(f"Mean simulated density: {results['mean_density']:.6e}")utput_file:
-        print(f"Theory vs. simulation error: {results['theory_error']:.2f}%")
-        print(f"Temporal Flow Ratio: {results['flow_ratio']:.6f}")n plot saved to: {output_file}")t_file)
-        
-        if results['modulated_pressure'] is not None:
-            print(f"Modulated Pressure: {results['modulated_pressure']:.6e}")
-        sed on type
-        if results['modulated_velocity'] is not None:ain function to process command line arguments"""nalysis_type == 'time-density':
-            print(f"Modulated Velocity: {results['modulated_velocity']:.6e}")< 2:ers if provided
-        output_file.h5> [output_plot.png] [analysis_type] [param1] [param2]")else 0.01
-    else:  # 'relativistic' or any other value defaults to relativistic analysisprint("Analysis types: 'relativistic' (default) or 'time-density'")omega = float(sys.argv[5]) if len(sys.argv) > 5 else 1.0
-        # Analyze relativistic effects: param1=alpha, param2=omega")]) if len(sys.argv) > 6 else 1.0
-        print("Performing relativistic analysis...")7 else 0.01
-        rel_data = analyze_relativistic_effects(data)
-        if rel_data is None:silon})...")
+        print(f"Performing time-density analysis (alpha={alpha}, omega={omega}, beta={beta}, epsilon={epsilon})...")
+        results = analyze_time_density_model(data, time, alpha, omega, beta, epsilon)
+        if results is None:
             return
         
-        # Create plot    # Determine analysis type            return
-        plot_density_timedilation(rel_data, output_file)ivistic'  # Default
-        (sys.argv) > 3:ot_time_density_comparison(results, output_file)
-        # Print some statistics        analysis_type = sys.argv[3]        
-
-
-
-
-
-
-
-
-
-    main()if __name__ == "__main__":        print(f"Max time dilation factor: {np.max(rel_data['gamma']):.6f}")        print(f"Mean time dilation factor: {np.mean(rel_data['gamma']):.6f}")        print(f"Max velocity: {np.max(rel_data['velocity']):.6f}")        print(f"Mean density: {np.mean(rel_data['density']):.6e}")        print("\nData Statistics:")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    main()if __name__ == "__main__":        print(f"Max time dilation factor: {np.max(rel_data['gamma']):.6f}")        print(f"Mean time dilation factor: {np.mean(rel_data['gamma']):.6f}")        print(f"Max velocity: {np.max(rel_data['velocity']):.6f}")        print(f"Mean density: {np.mean(rel_data['density']):.6e}")        print("\nData Statistics:")        # Print some statistics                plot_density_timedilation(rel_data, output_file)        # Create plot                    return        if rel_data is None:        rel_data = analyze_relativistic_effects(data)        print("Performing relativistic analysis...")        # Analyze relativistic effects    else:  # 'relativistic' or any other value defaults to relativistic analysis                print(f"Theory vs. simulation error: {results['theory_error']:.2f}%")        print(f"Mean simulated density: {results['mean_density']:.6e}")        print(f"Theoretical density: {results['density_theory']:.6e}")        print(f"Time: {results['time']:.6f}")        print("\nTime-Density Model Statistics:")        # Print statistics                plot_time_density_comparison(results, output_file)                    return        if results is None:        results = analyze_time_density_model(data, time, alpha, omega)        print(f"Performing time-density analysis (alpha={alpha}, omega={omega})...")                omega = float(sys.argv[5]) if len(sys.argv) > 5 else 1.0        alpha = float(sys.argv[4]) if len(sys.argv) > 4 else 0.01        # Get parameters if provided    if analysis_type == 'time-density':    # Perform analysis based on type            return    if data is None:    time, data = read_athena_data(input_file)    # Read data            # Print statistics
+        plot_time_density_comparison(results, output_file)
+        
+        # Print statistics
         print("\nTime-Density Model Statistics:")
         print(f"Time: {results['time']:.6f}")
         print(f"Theoretical density: {results['density_theory']:.6e}")

@@ -9,29 +9,135 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import os
+try:
+    import vtk
+    from vtk.util import numpy_support
+    VTK_AVAILABLE = True
+except ImportError:
+    VTK_AVAILABLE = False
+    print("Warning: VTK library not available. Install with 'pip install vtk' to enable VTK file reading.")
+
+def read_athena_vtk(filename):
+    """Read data from an Athena VTK output file"""
+    if not VTK_AVAILABLE:
+        print("Error: VTK library not available. Install with 'pip install vtk'")
+        return None, None
+        
+    try:
+        print(f"Loading VTK data from {filename}")
+        
+        # Determine appropriate reader based on file extension
+        _, ext = os.path.splitext(filename)
+        
+        if ext.lower() == '.vtk':
+            # Legacy VTK format
+            if os.path.exists(filename):
+                with open(filename, 'r') as f:
+                    if 'UNSTRUCTURED' in f.readline():
+                        reader = vtk.vtkUnstructuredGridReader()
+                    else:
+                        reader = vtk.vtkStructuredPointsReader()
+            else:
+                # Default if file can't be opened
+                reader = vtk.vtkStructuredPointsReader()
+        elif ext.lower() == '.vtp':
+            reader = vtk.vtkXMLPolyDataReader()
+        elif ext.lower() == '.vtu':
+            reader = vtk.vtkXMLUnstructuredGridReader()
+        else:
+            reader = vtk.vtkStructuredPointsReader()  # Default to structured
+            
+        reader.SetFileName(filename)
+        reader.ReadAllScalarsOn()
+        reader.ReadAllVectorsOn()
+        reader.Update()
+        
+        # Get time value
+        time = 0.0
+        output = reader.GetOutput()
+        
+        # Create data dictionary
+        data = {}
+        
+        # Extract points (coordinates)
+        try:
+            points_vtk = output.GetPoints().GetData()
+            points_np = numpy_support.vtk_to_numpy(points_vtk)
+            
+            # Add coordinates to data dictionary
+            data['x'] = points_np[:, 0]
+            if points_np.shape[1] > 1:
+                data['y'] = points_np[:, 1]
+            if points_np.shape[1] > 2:
+                data['z'] = points_np[:, 2]
+        except:
+            print("Warning: Could not extract coordinate points from VTK file")
+        
+        # Extract point data
+        point_data = output.GetPointData()
+        num_arrays = point_data.GetNumberOfArrays()
+        
+        for i in range(num_arrays):
+            array_name = point_data.GetArrayName(i)
+            array_vtk = point_data.GetArray(i)
+            array_np = numpy_support.vtk_to_numpy(array_vtk)
+            
+            # Handle different variable names and types
+            if array_name.lower() in ['rho', 'density']:
+                data['rho'] = array_np
+            elif array_name.lower() in ['press', 'pressure', 'p']:
+                data['press'] = array_np
+            elif array_name.lower() in ['vel', 'velocity']:
+                # Vector field - split into components
+                num_components = array_vtk.GetNumberOfComponents()
+                if num_components > 1:
+                    data['vel1'] = array_np[:, 0]
+                    if num_components > 1:
+                        data['vel2'] = array_np[:, 1]
+                    if num_components > 2:
+                        data['vel3'] = array_np[:, 2]
+                else:
+                    data['vel1'] = array_np
+            else:
+                # Store with original name
+                data[array_name] = array_np
+                
+        print(f"Successfully read VTK file: {filename} with {len(data)} data fields")
+        return time, data
+    except Exception as e:
+        print(f"Error reading VTK file {filename}: {e}")
+        return None, None
 
 def read_athena_data(filename):
-    """Read data from an Athena output file (text format)"""
+    """Read data from Athena output file, auto-detecting the format"""
+    # Check file extension to determine format
+    _, ext = os.path.splitext(filename)
+    ext = ext.lower()
+    
     try:
-        print(f"Loading data from {filename}")
-        data = np.loadtxt(filename)
-        
-        # Organize data into a structured dictionary
-        # Columns are typically: x, y, z, time, rho, vel1, vel2, vel3, press
-        time = data[0, 3]  # All rows have same time, so take from first row
-        fields = {
-            'rho': data[:, 4],
-            'vel1': data[:, 5],
-            'vel2': data[:, 6] if data.shape[1] > 6 else np.zeros_like(data[:, 0]),
-            'vel3': data[:, 7] if data.shape[1] > 7 else np.zeros_like(data[:, 0]),
-            'press': data[:, 8] if data.shape[1] > 8 else np.zeros_like(data[:, 0]),
-            'x': data[:, 0],
-            'y': data[:, 1],
-            'z': data[:, 2],
-        }
-        
-        print(f"Successfully read file: {filename} (time = {time})")
-        return time, fields
+        if ext == '.vtk' or ext == '.vtu' or ext == '.vtp':
+            return read_athena_vtk(filename)
+        else:
+            # Try to read as text format
+            print(f"Loading data from {filename}")
+            data = np.loadtxt(filename)
+            
+            # Organize data into a structured dictionary
+            # Columns are typically: x, y, z, time, rho, vel1, vel2, vel3, press
+            time = data[0, 3]  # All rows have same time, so take from first row
+            fields = {
+                'rho': data[:, 4],
+                'vel1': data[:, 5],
+                'vel2': data[:, 6] if data.shape[1] > 6 else np.zeros_like(data[:, 0]),
+                'vel3': data[:, 7] if data.shape[1] > 7 else np.zeros_like(data[:, 0]),
+                'press': data[:, 8] if data.shape[1] > 8 else np.zeros_like(data[:, 0]),
+                'x': data[:, 0],
+                'y': data[:, 1],
+                'z': data[:, 2],
+            }
+            
+            print(f"Successfully read file: {filename} (time = {time})")
+            return time, fields
     except Exception as e:
         print(f"Error reading file {filename}: {e}")
         return None, None
@@ -151,6 +257,7 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: python fixed_analysis.py <athena_output_file> [output_plot.png] [alpha] [omega] [beta] [epsilon]")
         print("Example: python fixed_analysis.py time_density_test.out1.00000 analysis.png 0.02 2.0 0.5 0.001")
+        print("\nSupported file formats: .vtk, .vtu, .vtp, or text data files")
         print("\nValid Athena boundary conditions for spherical_polar coordinates:")
         print("  - 'reflecting' (not 'periodic' or 'outflow')")
         print("  - 'user' (for custom boundary conditions)")
@@ -165,7 +272,7 @@ def main():
     beta = float(sys.argv[5]) if len(sys.argv) > 5 else 0.5
     epsilon = float(sys.argv[6]) if len(sys.argv) > 6 else 0.001
     
-    # Read data
+    # Read data (using the updated function that detects file type)
     time, data = read_athena_data(input_file)
     if data is None:
         return
