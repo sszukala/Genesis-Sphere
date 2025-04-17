@@ -23,12 +23,12 @@ Using minimal settings to ensure compatibility
   x3max = 0.01
   
   # Specific boundary conditions for spherical coordinates
-  ix1_bc = outflow  # Inner radial boundary
-  ox1_bc = outflow  # Outer radial boundary
-  ix2_bc = polar    # Theta minimum (pole)
-  ox2_bc = polar    # Theta maximum (pole) 
-  ix3_bc = periodic # Phi minimum
-  ox3_bc = periodic # Phi maximum
+  ix1_bc = outflow      # Inner radial boundary
+  ox1_bc = outflow      # Outer radial boundary
+  ix2_bc = polar_wedge  # Theta minimum (pole) - CHANGED FROM 'polar' to 'polar_wedge' for 2D
+  ox2_bc = polar_wedge  # Theta maximum (pole) - CHANGED FROM 'polar' to 'polar_wedge' for 2D
+  ix3_bc = periodic     # Phi minimum
+  ox3_bc = periodic     # Phi maximum
 </mesh>
 
 <time>
