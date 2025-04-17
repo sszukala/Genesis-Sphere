@@ -1,0 +1,12 @@
+{
+  "standard_input": "athena-docker/inputs/minimal_test.in",
+  "standard_output": "minimal_standard",
+  "time_density_input": "athena-docker/inputs/minimal_test.in",
+  "time_density_output": "minimal_time_density",
+  "td_params": {
+    "alpha": 0.02,
+    "omega": 2.0,
+    "beta": 0.5,
+    "epsilon": 0.001
+  }
+}

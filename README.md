@@ -717,11 +717,32 @@ If you encounter issues running the simulations:
    # Enter a Docker container interactively
    docker run -it --rm -v ${PWD}:/workspace athena-custom
    
-   # Inside the container, try running Athena manually
-   /athena/bin/athena -i athena-docker/inputs/standard/standard.cuda.in -o test
+   # Inside the container, try running Athena manually with proper syntax
+   # Note: there should be NO space between -o and the output prefix
+   /athena/bin/athena -i /athena/inputs/hydro/athinput.blast -otest_blast
+   
+   # For your custom input files, use the valid boundary type 'periodic'
+   # (We can see from the example input file that 'periodic' is valid)
+   /athena/bin/athena -i athena-docker/inputs/minimal_test.in -ominimal_test
    
    # Check if output files were created
    ls -la
+   
+   # To run the time-density simulation:
+   /athena/bin/athena -i athena-docker/inputs/time_density.athinput -otime_density_test
+   
+   # To analyze the results (after fixing the analysis script):
+   python3 /analysis/athena_analysis.py time_density_test.out1.00000
+   ```
+
+6. **Analysis Script Error**: 
+   If you encounter syntax errors in the analysis script, you may need to fix it:
+   ```bash
+   # Edit the script inside the container
+   nano /analysis/athena_analysis.py
+   
+   # Or create a corrected version in your workspace
+   nano athena-docker/fixed_analysis.py
    ```
 
 The workflow automatically handles Docker container management, simulation execution, and results analysis, providing a seamless validation pipeline for our theoretical models.

@@ -1,5 +1,5 @@
 <comment>
-Simple test problem to verify Athena configuration
+Minimal test problem to determine valid boundary conditions
 </comment>
 
 <job>
@@ -9,11 +9,11 @@ Simple test problem to verify Athena configuration
 </job>
 
 <mesh>
-  nx1 = 64
+  nx1 = 32
   x1min = 0.0
   x1max = 1.0
   
-  nx2 = 64
+  nx2 = 32
   x2min = 0.0
   x2max = 1.0
   
@@ -21,17 +21,17 @@ Simple test problem to verify Athena configuration
   x3min = 0.0
   x3max = 1.0
   
-  # Changed boundary conditions to valid types
-  ix1_bc = reflecting
-  ox1_bc = reflecting
-  ix2_bc = reflecting
-  ox2_bc = reflecting
-  ix3_bc = reflecting
-  ox3_bc = reflecting
+  # Try periodic boundaries
+  ix1_bc = periodic
+  ox1_bc = periodic
+  ix2_bc = periodic
+  ox2_bc = periodic
+  ix3_bc = periodic
+  ox3_bc = periodic
 </mesh>
 
 <time>
-  tlim = 0.1
+  tlim = 0.01
   ncycle_out = 1
   cfl_number = 0.3
 </time>
